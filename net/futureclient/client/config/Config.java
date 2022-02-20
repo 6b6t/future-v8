@@ -1,11 +1,11 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.config;
+package me.friendly.exeter.config;
 
-import com.gitlab.nuf.api.interfaces.Labeled;
-import com.gitlab.nuf.exeter.core.Exeter;
 import java.io.File;
+import me.friendly.api.interfaces.Labeled;
+import me.friendly.exeter.core.Exeter;
 
 public abstract class Config
 implements Labeled {

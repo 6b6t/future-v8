@@ -1,11 +1,11 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.command.impl.client;
+package me.friendly.exeter.command.impl.client;
 
-import com.gitlab.nuf.exeter.command.Argument;
-import com.gitlab.nuf.exeter.command.Command;
-import com.gitlab.nuf.exeter.core.Exeter;
+import me.friendly.exeter.command.Argument;
+import me.friendly.exeter.command.Command;
+import me.friendly.exeter.core.Exeter;
 
 public final class Prefix
 extends Command {

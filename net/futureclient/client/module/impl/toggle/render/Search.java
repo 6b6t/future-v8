@@ -5,24 +5,24 @@
  *  com.sun.javafx.geom.Vec3d
  *  org.lwjgl.opengl.GL11
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.render;
+package me.friendly.exeter.module.impl.toggle.render;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.api.minecraft.helper.WorldHelper;
-import com.gitlab.nuf.api.minecraft.render.RenderMethods;
-import com.gitlab.nuf.exeter.command.Argument;
-import com.gitlab.nuf.exeter.command.Command;
-import com.gitlab.nuf.exeter.core.Exeter;
-import com.gitlab.nuf.exeter.events.BlockRendererEvent;
-import com.gitlab.nuf.exeter.events.RenderEvent;
-import com.gitlab.nuf.exeter.module.ModuleType;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
-import com.gitlab.nuf.exeter.properties.NumberProperty;
-import com.gitlab.nuf.exeter.properties.Property;
 import com.sun.javafx.geom.Vec3d;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import me.friendly.api.event.Listener;
+import me.friendly.api.minecraft.helper.WorldHelper;
+import me.friendly.api.minecraft.render.RenderMethods;
+import me.friendly.exeter.command.Argument;
+import me.friendly.exeter.command.Command;
+import me.friendly.exeter.core.Exeter;
+import me.friendly.exeter.events.BlockRendererEvent;
+import me.friendly.exeter.events.RenderEvent;
+import me.friendly.exeter.module.ModuleType;
+import me.friendly.exeter.module.ToggleableModule;
+import me.friendly.exeter.properties.NumberProperty;
+import me.friendly.exeter.properties.Property;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.AxisAlignedBB;
@@ -53,10 +53,10 @@ extends ToggleableModule {
                         Search.this.vec3ds.remove(vec3d);
                         continue;
                     }
-                    double x2 = vec3d.x - ((Search)Search.this).minecraft.getRenderManager().renderPosX;
-                    double y2 = vec3d.y - ((Search)Search.this).minecraft.getRenderManager().renderPosY;
-                    double z2 = vec3d.z - ((Search)Search.this).minecraft.getRenderManager().renderPosZ;
-                    AxisAlignedBB box = new AxisAlignedBB(x2, y2, z2, x2 + 1.0, y2 + 1.0, z2 + 1.0);
+                    double x = vec3d.x - ((Search)Search.this).minecraft.getRenderManager().renderPosX;
+                    double y = vec3d.y - ((Search)Search.this).minecraft.getRenderManager().renderPosY;
+                    double z = vec3d.z - ((Search)Search.this).minecraft.getRenderManager().renderPosZ;
+                    AxisAlignedBB box = new AxisAlignedBB(x, y, z, x + 1.0, y + 1.0, z + 1.0);
                     float[] color = Search.this.getColor(WorldHelper.getBlock(vec3d.x, vec3d.y, vec3d.z));
                     GlStateManager.color(color[0], color[1], color[2], 0.25f);
                     boolean bobbing = ((Search)Search.this).minecraft.gameSettings.viewBobbing;
@@ -68,7 +68,7 @@ extends ToggleableModule {
                         ((Search)Search.this).minecraft.entityRenderer.orientCamera(event.getPartialTicks());
                         GL11.glBegin((int)1);
                         GL11.glVertex3d((double)0.0, (double)((Search)Search.this).minecraft.thePlayer.getEyeHeight(), (double)0.0);
-                        GL11.glVertex3d((double)(x2 + 0.5), (double)y2, (double)(z2 + 0.5));
+                        GL11.glVertex3d((double)(x + 0.5), (double)y, (double)(z + 0.5));
                         GL11.glEnd();
                         GlStateManager.popMatrix();
                     }

@@ -1,15 +1,15 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.miscellaneous;
+package me.friendly.exeter.module.impl.toggle.miscellaneous;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.api.minecraft.helper.PlayerHelper;
-import com.gitlab.nuf.exeter.events.MotionUpdateEvent;
-import com.gitlab.nuf.exeter.events.PacketEvent;
-import com.gitlab.nuf.exeter.module.ModuleType;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
-import com.gitlab.nuf.exeter.properties.EnumProperty;
+import me.friendly.api.event.Listener;
+import me.friendly.api.minecraft.helper.PlayerHelper;
+import me.friendly.exeter.events.MotionUpdateEvent;
+import me.friendly.exeter.events.PacketEvent;
+import me.friendly.exeter.module.ModuleType;
+import me.friendly.exeter.module.ToggleableModule;
+import me.friendly.exeter.properties.EnumProperty;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 import net.minecraft.network.play.client.C0BPacketEntityAction;
 
@@ -28,6 +28,7 @@ extends ToggleableModule {
                     case SILENT: {
                         switch (event.getTime()) {
                             case BEFORE: {
+                                if (((Sneak)Sneak.this).minecraft.thePlayer.isSneaking()) break;
                                 if (PlayerHelper.isMoving()) {
                                     Sneak.this.minecraft.getNetHandler().addToSendQueue(new C0BPacketEntityAction(((Sneak)Sneak.this).minecraft.thePlayer, C0BPacketEntityAction.Action.START_SNEAKING));
                                     Sneak.this.minecraft.getNetHandler().addToSendQueue(new C0BPacketEntityAction(((Sneak)Sneak.this).minecraft.thePlayer, C0BPacketEntityAction.Action.STOP_SNEAKING));

@@ -4,13 +4,13 @@
  * Could not load the following classes:
  *  org.lwjgl.input.Keyboard
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.miscellaneous;
+package me.friendly.exeter.module.impl.toggle.miscellaneous;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.exeter.events.MotionUpdateEvent;
-import com.gitlab.nuf.exeter.module.ModuleType;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
-import com.gitlab.nuf.exeter.module.impl.toggle.render.clickgui.ClickGui;
+import me.friendly.api.event.Listener;
+import me.friendly.exeter.events.MotionUpdateEvent;
+import me.friendly.exeter.module.ModuleType;
+import me.friendly.exeter.module.ToggleableModule;
+import me.friendly.exeter.module.impl.toggle.render.clickgui.ClickGui;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.settings.KeyBinding;
 import org.lwjgl.input.Keyboard;
@@ -18,7 +18,7 @@ import org.lwjgl.input.Keyboard;
 public final class InventoryWalk
 extends ToggleableModule {
     public InventoryWalk() {
-        super("Inventory Walk", new String[]{"inventorywalk", "iw"}, ModuleType.MISCELLANEOUS);
+        super("InventoryWalk", new String[]{"inventorywalk", "iw"}, ModuleType.MISCELLANEOUS);
         this.listeners.add(new Listener<MotionUpdateEvent>("inventory_walk_motion_update_listener"){
 
             @Override

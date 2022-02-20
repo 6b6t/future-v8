@@ -1,7 +1,7 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.api.io;
+package me.friendly.api.io;
 
 import java.io.BufferedReader;
 import java.io.IOException;

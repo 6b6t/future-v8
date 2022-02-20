@@ -3,18 +3,20 @@
  * 
  * Could not load the following classes:
  *  org.lwjgl.opengl.GL11
+ *  org.lwjgl.util.glu.Cylinder
+ *  org.lwjgl.util.glu.Sphere
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.render;
+package me.friendly.exeter.module.impl.toggle.render;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.api.minecraft.render.RenderMethods;
-import com.gitlab.nuf.exeter.core.Exeter;
-import com.gitlab.nuf.exeter.events.RenderEvent;
-import com.gitlab.nuf.exeter.module.ModuleType;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
-import com.gitlab.nuf.exeter.properties.EnumProperty;
-import com.gitlab.nuf.exeter.properties.NumberProperty;
-import com.gitlab.nuf.exeter.properties.Property;
+import me.friendly.api.event.Listener;
+import me.friendly.api.minecraft.render.RenderMethods;
+import me.friendly.exeter.core.Exeter;
+import me.friendly.exeter.events.RenderEvent;
+import me.friendly.exeter.module.ModuleType;
+import me.friendly.exeter.module.ToggleableModule;
+import me.friendly.exeter.properties.EnumProperty;
+import me.friendly.exeter.properties.NumberProperty;
+import me.friendly.exeter.properties.Property;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.entity.Entity;
@@ -26,6 +28,8 @@ import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.glu.Cylinder;
+import org.lwjgl.util.glu.Sphere;
 
 public final class Tracers
 extends ToggleableModule {
@@ -38,12 +42,13 @@ extends ToggleableModule {
     private final Property<Boolean> invisibles = new Property<Boolean>(true, "Invisibles", "invis", "inv", "invisible");
     private final Property<Boolean> monsters = new Property<Boolean>(false, "Monsters", "monster", "mon", "m");
     private final Property<Boolean> animals = new Property<Boolean>(false, "Animals", "animal", "ani", "a");
+    public static Property<Boolean> esp = new Property<Boolean>(false, "ESP", "e");
     private final EnumProperty<Mode> mode = new EnumProperty<Mode>(Mode.OUTLINE, "Mode", "m");
     private final NumberProperty<Float> width = new NumberProperty<Float>(Float.valueOf(1.8f), Float.valueOf(1.0f), Float.valueOf(5.0f), "Width", "w");
 
     public Tracers() {
         super("Tracers", new String[]{"tracers", "entityesp", "eesp", "esp"}, ModuleType.RENDER);
-        this.offerProperties(this.box, this.players, this.spine, this.enderpearls, this.width, this.items, this.monsters, this.animals, this.lines, this.invisibles, this.mode);
+        this.offerProperties(this.box, this.players, this.spine, this.enderpearls, this.width, this.items, this.monsters, this.animals, this.lines, this.invisibles, this.mode, esp);
         this.listeners.add(new Listener<RenderEvent>("tracers_render_listener"){
 
             @Override
@@ -51,25 +56,26 @@ extends ToggleableModule {
                 GlStateManager.pushMatrix();
                 RenderMethods.enableGL3D();
                 for (Entity entity : ((Tracers)Tracers.this).minecraft.theWorld.loadedEntityList) {
+                    float distance;
                     if (!entity.isEntityAlive() || !Tracers.this.isValidEntity(entity)) continue;
-                    double x2 = Tracers.this.interpolate(entity.lastTickPosX, entity.posX, event.getPartialTicks(), ((Tracers)Tracers.this).minecraft.getRenderManager().renderPosX);
-                    double y2 = Tracers.this.interpolate(entity.lastTickPosY, entity.posY, event.getPartialTicks(), ((Tracers)Tracers.this).minecraft.getRenderManager().renderPosY);
-                    double z2 = Tracers.this.interpolate(entity.lastTickPosZ, entity.posZ, event.getPartialTicks(), ((Tracers)Tracers.this).minecraft.getRenderManager().renderPosZ);
-                    AxisAlignedBB axisAlignedBB = new AxisAlignedBB(x2 - 0.4, y2, z2 - 0.4, x2 + 0.4, y2 + 2.0, z2 + 0.4);
+                    double x = Tracers.this.interpolate(entity.lastTickPosX, entity.posX, event.getPartialTicks(), ((Tracers)Tracers.this).minecraft.getRenderManager().renderPosX);
+                    double y = Tracers.this.interpolate(entity.lastTickPosY, entity.posY, event.getPartialTicks(), ((Tracers)Tracers.this).minecraft.getRenderManager().renderPosY);
+                    double z = Tracers.this.interpolate(entity.lastTickPosZ, entity.posZ, event.getPartialTicks(), ((Tracers)Tracers.this).minecraft.getRenderManager().renderPosZ);
+                    AxisAlignedBB axisAlignedBB = new AxisAlignedBB(x - 0.4, y, z - 0.4, x + 0.4, y + 2.0, z + 0.4);
                     if (!(entity instanceof EntityPlayer)) {
-                        axisAlignedBB = new AxisAlignedBB(x2 - 0.4, y2, z2 - 0.4, x2 + 0.4, y2 + (double)entity.getEyeHeight() + 0.35, z2 + 0.4);
+                        axisAlignedBB = new AxisAlignedBB(x - 0.4, y, z - 0.4, x + 0.4, y + (double)entity.getEyeHeight() + 0.35, z + 0.4);
                     }
                     if (entity instanceof EntityItem) {
-                        axisAlignedBB = new AxisAlignedBB(x2 - 0.16, y2 + 0.13, z2 - 0.16, x2 + 0.16, y2 + (double)entity.getEyeHeight() + 0.25, z2 + 0.16);
+                        axisAlignedBB = new AxisAlignedBB(x - 0.16, y + 0.13, z - 0.16, x + 0.16, y + (double)entity.getEyeHeight() + 0.25, z + 0.16);
                     } else if (entity instanceof EntityEnderPearl) {
-                        axisAlignedBB = new AxisAlignedBB(x2 - 0.16, y2 - 0.2, z2 - 0.16, x2 + 0.16, y2 + (double)entity.getEyeHeight() - 0.1, z2 + 0.16);
+                        axisAlignedBB = new AxisAlignedBB(x - 0.16, y - 0.2, z - 0.16, x + 0.16, y + (double)entity.getEyeHeight() - 0.1, z + 0.16);
                     }
                     if (Exeter.getInstance().getFriendManager().isFriend(entity.getName())) {
                         GlStateManager.color(0.27f, 0.7f, 0.92f, 0.45f);
                     } else {
-                        float distance = ((Tracers)Tracers.this).minecraft.thePlayer.getDistanceToEntity(entity);
-                        if (distance <= 32.0f) {
-                            GlStateManager.color(1.0f, distance / 32.0f, 0.0f, 0.45f);
+                        float distance2 = ((Tracers)Tracers.this).minecraft.thePlayer.getDistanceToEntity(entity);
+                        if (distance2 <= 32.0f) {
+                            GlStateManager.color(1.0f, distance2 / 32.0f, 0.0f, 0.45f);
                         } else {
                             GlStateManager.color(0.0f, 0.9f, 0.0f, 0.45f);
                         }
@@ -83,20 +89,31 @@ extends ToggleableModule {
                         ((Tracers)Tracers.this).minecraft.entityRenderer.orientCamera(event.getPartialTicks());
                         GL11.glBegin((int)1);
                         GL11.glVertex3d((double)0.0, (double)((Tracers)Tracers.this).minecraft.thePlayer.getEyeHeight(), (double)0.0);
-                        GL11.glVertex3d((double)x2, (double)y2, (double)z2);
+                        if (Tracers.this.mode.getValue() == Mode.OUTLINE && esp.getValue().booleanValue()) {
+                            GL11.glVertex3d((double)x, (double)(y + 1.0), (double)z);
+                        } else {
+                            GL11.glVertex3d((double)x, (double)y, (double)z);
+                        }
                         if (((Boolean)Tracers.this.spine.getValue()).booleanValue()) {
-                            GL11.glVertex3d((double)x2, (double)y2, (double)z2);
-                            GL11.glVertex3d((double)x2, (double)(y2 + (double)entity.getEyeHeight()), (double)z2);
+                            if (Tracers.this.mode.getValue() == Mode.OUTLINE && esp.getValue().booleanValue()) {
+                                GL11.glVertex3d((double)x, (double)(y + 1.0), (double)z);
+                            } else {
+                                GL11.glVertex3d((double)x, (double)y, (double)z);
+                            }
+                            if (entity instanceof EntityPlayer) {
+                                GL11.glVertex3d((double)x, (double)(y + 1.35), (double)z);
+                            } else {
+                                GL11.glVertex3d((double)x, (double)(y + (double)entity.getEyeHeight()), (double)z);
+                            }
                         }
                         GL11.glEnd();
                         GlStateManager.popMatrix();
                     }
-                    if (((Boolean)Tracers.this.box.getValue()).booleanValue() && Tracers.this.mode.getValue() != Mode.OUTLINE) {
-                        float distance;
+                    if (((Boolean)Tracers.this.box.getValue()).booleanValue()) {
                         GlStateManager.pushMatrix();
-                        GlStateManager.translate(x2, y2, z2);
+                        GlStateManager.translate(x, y, z);
                         GlStateManager.rotate(-entity.rotationYaw, 0.0f, entity.height, 0.0f);
-                        GlStateManager.translate(-x2, -y2, -z2);
+                        GlStateManager.translate(-x, -y, -z);
                         if (entity instanceof EntityItem || entity instanceof EntityEnderPearl) {
                             distance = ((Tracers)Tracers.this).minecraft.thePlayer.getDistanceToEntity(entity);
                             if (distance <= 32.0f) {
@@ -105,7 +122,16 @@ extends ToggleableModule {
                                 GlStateManager.color(0.0f, 0.9f, 0.0f, 0.25f);
                             }
                             RenderMethods.drawBox(axisAlignedBB);
-                        } else if (Tracers.this.mode.getValue() == Mode.FILL) {
+                        }
+                        RenderMethods.drawOutlinedBox(axisAlignedBB);
+                        GlStateManager.popMatrix();
+                    }
+                    if (esp.getValue().booleanValue()) {
+                        if (Tracers.this.mode.getValue() == Mode.FILL) {
+                            GlStateManager.pushMatrix();
+                            GlStateManager.translate(x, y, z);
+                            GlStateManager.rotate(-entity.rotationYaw, 0.0f, entity.height, 0.0f);
+                            GlStateManager.translate(-x, -y, -z);
                             if (Exeter.getInstance().getFriendManager().isFriend(entity.getName())) {
                                 GlStateManager.color(0.27f, 0.7f, 0.92f, 0.15f);
                             } else {
@@ -117,12 +143,45 @@ extends ToggleableModule {
                                 }
                             }
                             RenderMethods.drawBox(axisAlignedBB);
-                        }
-                        RenderMethods.drawOutlinedBox(axisAlignedBB);
-                        if (Tracers.this.mode.getValue() == Mode.CROSS) {
+                            RenderMethods.drawOutlinedBox(axisAlignedBB);
+                            GlStateManager.popMatrix();
+                        } else if (Tracers.this.mode.getValue() == Mode.CROSS) {
+                            GlStateManager.pushMatrix();
+                            GlStateManager.translate(x, y, z);
+                            GlStateManager.rotate(-entity.rotationYaw, 0.0f, entity.height, 0.0f);
+                            GlStateManager.translate(-x, -y, -z);
+                            RenderMethods.drawOutlinedBox(axisAlignedBB);
                             RenderMethods.renderCrosses(axisAlignedBB);
+                            GlStateManager.popMatrix();
+                        } else if (Tracers.this.mode.getValue() == Mode.PENIS) {
+                            GlStateManager.pushMatrix();
+                            GlStateManager.translate(x, y, z);
+                            GlStateManager.rotate(-entity.rotationYaw, 0.0f, entity.height, 0.0f);
+                            GlStateManager.translate(-x, -y, -z);
+                            GlStateManager.translate(x, y + (double)(entity.height / 2.0f) - (double)0.225f, z);
+                            GlStateManager.rotate(entity.rotationPitch, 1.0f, 0.0f, 0.0f);
+                            GlStateManager.color(1.0f, 1.0f, 0.0f, 1.0f);
+                            int lines = 20;
+                            GlStateManager.translate(0.0, 0.0, 0.075);
+                            Cylinder shaft = new Cylinder();
+                            shaft.setDrawStyle(100013);
+                            shaft.draw(0.1f, 0.09f, 1.0f, 25, lines * 2);
+                            GlStateManager.translate(0.0, 0.0, -0.075);
+                            GlStateManager.translate(-0.05, 0.0, 0.0);
+                            Sphere right = new Sphere();
+                            right.setDrawStyle(100013);
+                            right.draw(0.1f, 25, lines);
+                            GlStateManager.translate(0.1, 0.0, 0.0);
+                            Sphere left = new Sphere();
+                            left.setDrawStyle(100013);
+                            left.draw(0.1f, 25, lines);
+                            GlStateManager.color(1.0f, 0.2f, 1.0f, 1.0f);
+                            GlStateManager.translate(-0.05, 0.0, 1.1);
+                            Sphere tip = new Sphere();
+                            tip.setDrawStyle(100013);
+                            tip.draw(0.09f, 25, lines);
+                            GlStateManager.popMatrix();
                         }
-                        GlStateManager.popMatrix();
                     }
                     ((Tracers)Tracers.this).minecraft.gameSettings.viewBobbing = bobbing;
                 }
@@ -161,8 +220,8 @@ extends ToggleableModule {
         return false;
     }
 
-    private double interpolate(double lastI, double i2, float ticks, double ownI) {
-        return lastI + (i2 - lastI) * (double)ticks - ownI;
+    private double interpolate(double lastI, double i, float ticks, double ownI) {
+        return lastI + (i - lastI) * (double)ticks - ownI;
     }
 
     public void renderOne() {
@@ -234,8 +293,8 @@ extends ToggleableModule {
     public static enum Mode {
         FILL,
         CROSS,
-        BOUNDING,
-        OUTLINE;
+        OUTLINE,
+        PENIS;
 
     }
 }

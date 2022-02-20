@@ -1,23 +1,29 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.events;
+package me.friendly.exeter.events;
 
-import com.gitlab.nuf.api.event.Event;
+import me.friendly.api.event.Event;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 
 public class BlockBoundingBoxEvent
 extends Event {
+    private IBlockState state;
     private Block block;
     private AxisAlignedBB boundingBox;
     private BlockPos blockPos;
 
-    public BlockBoundingBoxEvent(Block block, AxisAlignedBB boundingBox, BlockPos blockPos) {
+    public BlockBoundingBoxEvent(Block block, AxisAlignedBB boundingBox, BlockPos blockPos, IBlockState state) {
         this.block = block;
         this.boundingBox = boundingBox;
         this.blockPos = blockPos;
+        this.state = state;
+    }
+
+    public BlockBoundingBoxEvent(AxisAlignedBB var7, Block block, int x, int y, int z) {
     }
 
     public BlockPos getBlockPos() {
@@ -42,6 +48,10 @@ extends Event {
 
     public void setBoundingBox(AxisAlignedBB boundingBox) {
         this.boundingBox = boundingBox;
+    }
+
+    public IBlockState getState() {
+        return this.state;
     }
 }
 

@@ -1,15 +1,15 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.render.clickgui;
+package me.friendly.exeter.module.impl.toggle.render.clickgui;
 
-import com.gitlab.nuf.api.interfaces.Labeled;
-import com.gitlab.nuf.api.minecraft.render.CustomFont;
-import com.gitlab.nuf.api.minecraft.render.RenderMethods;
-import com.gitlab.nuf.exeter.module.impl.toggle.render.clickgui.ClickGui;
-import com.gitlab.nuf.exeter.module.impl.toggle.render.clickgui.item.Button;
-import com.gitlab.nuf.exeter.module.impl.toggle.render.clickgui.item.Item;
 import java.util.ArrayList;
+import me.friendly.api.interfaces.Labeled;
+import me.friendly.api.minecraft.render.CustomFont;
+import me.friendly.api.minecraft.render.RenderMethods;
+import me.friendly.exeter.module.impl.toggle.render.clickgui.ClickGui;
+import me.friendly.exeter.module.impl.toggle.render.clickgui.item.Button;
+import me.friendly.exeter.module.impl.toggle.render.clickgui.item.Item;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.util.ResourceLocation;
@@ -27,10 +27,10 @@ implements Labeled {
     public boolean drag;
     private final ArrayList<Item> items = new ArrayList();
 
-    public Panel(String label, int x2, int y2, boolean open) {
+    public Panel(String label, int x, int y, boolean open) {
         this.label = label;
-        this.x = x2;
-        this.y = y2;
+        this.x = x;
+        this.y = y;
         this.width = 88;
         this.height = 18;
         this.open = open;
@@ -48,12 +48,12 @@ implements Labeled {
         }
         ClickGui.getClickGui().guiFont.drawString(this.getLabel(), (float)this.x + 3.0f, (float)this.y - 4.0f, CustomFont.FontType.SHADOW_THIN, -1);
         if (this.open) {
-            float y2 = (float)(this.getY() + this.getHeight()) - 3.0f;
+            float y = (float)(this.getY() + this.getHeight()) - 3.0f;
             for (Item item : this.getItems()) {
-                item.setLocation((float)this.x + 2.0f, y2);
+                item.setLocation((float)this.x + 2.0f, y);
                 item.setWidth(this.getWidth() - 4);
                 item.drawScreen(mouseX, mouseY, partialTicks);
-                y2 += (float)item.getHeight() + 1.5f;
+                y += (float)item.getHeight() + 1.5f;
             }
         }
     }

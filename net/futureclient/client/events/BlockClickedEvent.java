@@ -1,9 +1,9 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.events;
+package me.friendly.exeter.events;
 
-import com.gitlab.nuf.api.event.Event;
+import me.friendly.api.event.Event;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 

@@ -1,7 +1,7 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.properties;
+package me.friendly.exeter.properties;
 
 public class Property<T> {
     private final String[] aliases;

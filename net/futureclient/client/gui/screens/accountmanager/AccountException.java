@@ -1,7 +1,7 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.gui.screens.accountmanager;
+package me.friendly.exeter.gui.screens.accountmanager;
 
 public class AccountException
 extends Exception {

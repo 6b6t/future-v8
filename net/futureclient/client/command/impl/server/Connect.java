@@ -1,10 +1,10 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.command.impl.server;
+package me.friendly.exeter.command.impl.server;
 
-import com.gitlab.nuf.exeter.command.Argument;
-import com.gitlab.nuf.exeter.command.Command;
+import me.friendly.exeter.command.Argument;
+import me.friendly.exeter.command.Command;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerData;
 

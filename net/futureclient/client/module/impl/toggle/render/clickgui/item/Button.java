@@ -1,14 +1,14 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.render.clickgui.item;
+package me.friendly.exeter.module.impl.toggle.render.clickgui.item;
 
-import com.gitlab.nuf.api.interfaces.Labeled;
-import com.gitlab.nuf.api.minecraft.render.CustomFont;
-import com.gitlab.nuf.api.minecraft.render.RenderMethods;
-import com.gitlab.nuf.exeter.module.impl.toggle.render.clickgui.ClickGui;
-import com.gitlab.nuf.exeter.module.impl.toggle.render.clickgui.Panel;
-import com.gitlab.nuf.exeter.module.impl.toggle.render.clickgui.item.Item;
+import me.friendly.api.interfaces.Labeled;
+import me.friendly.api.minecraft.render.CustomFont;
+import me.friendly.api.minecraft.render.RenderMethods;
+import me.friendly.exeter.module.impl.toggle.render.clickgui.ClickGui;
+import me.friendly.exeter.module.impl.toggle.render.clickgui.Panel;
+import me.friendly.exeter.module.impl.toggle.render.clickgui.item.Item;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.util.ResourceLocation;
@@ -25,7 +25,7 @@ implements Labeled {
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        RenderMethods.drawGradientRect(this.x, this.y, this.x + (float)this.width, this.y + (float)this.height, this.getState() ? (!this.isHovering(mouseX, mouseY) ? 2000402499 : 1429977155) : (!this.isHovering(mouseX, mouseY) ? 0x33555555 : -2007673515), this.getState() ? (!this.isHovering(mouseX, mouseY) ? -1438926781 : -1721964477) : (!this.isHovering(mouseX, mouseY) ? 0x55555555 : -1722460843));
+        RenderMethods.drawGradientRect(this.x, this.y, this.x + (float)this.width, this.y + (float)this.height, this.getState() ? (!this.isHovering(mouseX, mouseY) ? 2012955202 : 1442529858) : (!this.isHovering(mouseX, mouseY) ? 0x33555555 : -2007673515), this.getState() ? (!this.isHovering(mouseX, mouseY) ? -1426374078 : -1711586750) : (!this.isHovering(mouseX, mouseY) ? 0x55555555 : -1722460843));
         ClickGui.getClickGui().guiFont.drawString(this.getLabel(), this.x + 2.3f, this.y - 2.0f, CustomFont.FontType.SHADOW_THIN, this.getState() ? -1 : -5592406);
     }
 

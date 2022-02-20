@@ -1,14 +1,14 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.miscellaneous;
+package me.friendly.exeter.module.impl.toggle.miscellaneous;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.api.minecraft.helper.PlayerHelper;
-import com.gitlab.nuf.exeter.events.PacketEvent;
-import com.gitlab.nuf.exeter.events.PotionDecrementEvent;
-import com.gitlab.nuf.exeter.module.ModuleType;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
+import me.friendly.api.event.Listener;
+import me.friendly.api.minecraft.helper.PlayerHelper;
+import me.friendly.exeter.events.PacketEvent;
+import me.friendly.exeter.events.PotionDecrementEvent;
+import me.friendly.exeter.module.ModuleType;
+import me.friendly.exeter.module.ToggleableModule;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.potion.Potion;
 
@@ -17,7 +17,7 @@ extends ToggleableModule {
     private final Potion[] potions = new Potion[]{Potion.ABSORPTION, Potion.DAMAGE_BOOST, Potion.MOVE_SPEED, Potion.DIG_SPEED, Potion.FIRE_RESISTANCE, Potion.INVISIBILITY, Potion.JUMP_BOOST, Potion.REGENERATION, Potion.RESISTANCE, Potion.WATER_BREATHING, Potion.SATURATION};
 
     public PotionSaver() {
-        super("Potion Saver", new String[]{"potionsaver", "ps"}, -11808797, ModuleType.MISCELLANEOUS);
+        super("PotionSaver", new String[]{"potionsaver", "ps"}, -11808797, ModuleType.MISCELLANEOUS);
         this.listeners.add(new Listener<PacketEvent>("potion_saver_packet_listener"){
 
             @Override

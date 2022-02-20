@@ -1,13 +1,13 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.render;
+package me.friendly.exeter.module.impl.toggle.render;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.api.minecraft.render.RenderMethods;
-import com.gitlab.nuf.exeter.events.RenderEvent;
-import com.gitlab.nuf.exeter.module.ModuleType;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
+import me.friendly.api.event.Listener;
+import me.friendly.api.minecraft.render.RenderMethods;
+import me.friendly.exeter.events.RenderEvent;
+import me.friendly.exeter.module.ModuleType;
+import me.friendly.exeter.module.ToggleableModule;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityFallingBlock;
@@ -25,10 +25,10 @@ extends ToggleableModule {
                 RenderMethods.enableGL3D();
                 for (Entity entity : ((Seeker)Seeker.this).minecraft.theWorld.loadedEntityList) {
                     if (!entity.isEntityAlive() || !(entity instanceof EntityFallingBlock)) continue;
-                    double x2 = Seeker.this.interpolate(entity.lastTickPosX, entity.posX, event.getPartialTicks(), ((Seeker)Seeker.this).minecraft.getRenderManager().renderPosX);
-                    double y2 = Seeker.this.interpolate(entity.lastTickPosY, entity.posY, event.getPartialTicks(), ((Seeker)Seeker.this).minecraft.getRenderManager().renderPosY);
-                    double z2 = Seeker.this.interpolate(entity.lastTickPosZ, entity.posZ, event.getPartialTicks(), ((Seeker)Seeker.this).minecraft.getRenderManager().renderPosZ);
-                    AxisAlignedBB axisAlignedBB = new AxisAlignedBB(x2 - 0.5, y2, z2 - 0.5, x2 + 0.5, y2 + 1.0, z2 + 0.5);
+                    double x = Seeker.this.interpolate(entity.lastTickPosX, entity.posX, event.getPartialTicks(), ((Seeker)Seeker.this).minecraft.getRenderManager().renderPosX);
+                    double y = Seeker.this.interpolate(entity.lastTickPosY, entity.posY, event.getPartialTicks(), ((Seeker)Seeker.this).minecraft.getRenderManager().renderPosY);
+                    double z = Seeker.this.interpolate(entity.lastTickPosZ, entity.posZ, event.getPartialTicks(), ((Seeker)Seeker.this).minecraft.getRenderManager().renderPosZ);
+                    AxisAlignedBB axisAlignedBB = new AxisAlignedBB(x - 0.5, y, z - 0.5, x + 0.5, y + 1.0, z + 0.5);
                     float distance = ((Seeker)Seeker.this).minecraft.thePlayer.getDistanceToEntity(entity);
                     if (distance <= 32.0f) {
                         GlStateManager.color(1.0f, distance / 32.0f, 0.0f, 0.35f);
@@ -43,8 +43,8 @@ extends ToggleableModule {
         });
     }
 
-    private double interpolate(double lastI, double i2, float ticks, double ownI) {
-        return lastI + (i2 - lastI) * (double)ticks - ownI;
+    private double interpolate(double lastI, double i, float ticks, double ownI) {
+        return lastI + (i - lastI) * (double)ticks - ownI;
     }
 }
 

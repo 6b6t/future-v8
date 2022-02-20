@@ -1,7 +1,7 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.api.event;
+package me.friendly.api.event;
 
 public class Event {
     private boolean canceled = false;

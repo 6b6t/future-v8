@@ -1,25 +1,25 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.movement;
+package me.friendly.exeter.module.impl.toggle.movement;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.exeter.events.PacketEvent;
-import com.gitlab.nuf.exeter.events.WaterMoveEvent;
-import com.gitlab.nuf.exeter.module.ModuleType;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
-import com.gitlab.nuf.exeter.properties.NumberProperty;
-import com.gitlab.nuf.exeter.properties.Property;
+import me.friendly.api.event.Listener;
+import me.friendly.exeter.events.PacketEvent;
+import me.friendly.exeter.events.WaterMoveEvent;
+import me.friendly.exeter.module.ModuleType;
+import me.friendly.exeter.module.ToggleableModule;
+import me.friendly.exeter.properties.NumberProperty;
+import me.friendly.exeter.properties.Property;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.minecraft.network.play.server.S27PacketExplosion;
 
 public final class AntiVelocity
 extends ToggleableModule {
-    private final NumberProperty<Integer> percent = new NumberProperty<Integer>(Integer.valueOf(0), -100, 100, "Percent", "p", "%");
+    private final NumberProperty<Integer> percent = new NumberProperty<Integer>(Integer.valueOf(0), 0, 100, "Percent", "p", "%");
     private final Property<Boolean> water = new Property<Boolean>(true, "Water", "w");
 
     public AntiVelocity() {
-        super("Anti Velocity", new String[]{"antivelocity", "novelocity", "av", "nv", "velocity"}, -6381922, ModuleType.MOVEMENT);
+        super("AntiVelocity", new String[]{"antivelocity", "novelocity", "av", "nv", "velocity"}, -6381922, ModuleType.MOVEMENT);
         this.offerProperties(this.percent, this.water);
         this.listeners.add(new Listener<PacketEvent>("anti_velocity_packet_listener"){
 
@@ -38,9 +38,9 @@ extends ToggleableModule {
                             break;
                         }
                         default: {
-                            explosion.setMotionX(explosion.getMotionX() / 8000.0 / (double)((Integer)AntiVelocity.this.percent.getValue()).intValue());
-                            explosion.setMotionY(explosion.getMotionY() / 8000.0 / (double)((Integer)AntiVelocity.this.percent.getValue()).intValue());
-                            explosion.setMotionZ(explosion.getMotionZ() / 8000.0 / (double)((Integer)AntiVelocity.this.percent.getValue()).intValue());
+                            explosion.setMotionX(explosion.getMotionX() * (double)((Integer)AntiVelocity.this.percent.getValue()).intValue() / 100.0);
+                            explosion.setMotionY(explosion.getMotionY() * (double)((Integer)AntiVelocity.this.percent.getValue()).intValue() / 100.0);
+                            explosion.setMotionZ(explosion.getMotionZ() * (double)((Integer)AntiVelocity.this.percent.getValue()).intValue() / 100.0);
                             break;
                         }
                     }
@@ -54,9 +54,9 @@ extends ToggleableModule {
                             break;
                         }
                         default: {
-                            entityVelocity.setMotionX(entityVelocity.getMotionX() / 8000 / (Integer)AntiVelocity.this.percent.getValue());
-                            entityVelocity.setMotionY(entityVelocity.getMotionY() / 8000 / (Integer)AntiVelocity.this.percent.getValue());
-                            entityVelocity.setMotionZ(entityVelocity.getMotionZ() / 8000 / (Integer)AntiVelocity.this.percent.getValue());
+                            entityVelocity.setMotionX(entityVelocity.getMotionX() * (Integer)AntiVelocity.this.percent.getValue() / 100);
+                            entityVelocity.setMotionY(entityVelocity.getMotionY() * (Integer)AntiVelocity.this.percent.getValue() / 100);
+                            entityVelocity.setMotionZ(entityVelocity.getMotionZ() * (Integer)AntiVelocity.this.percent.getValue() / 100);
                         }
                     }
                 }

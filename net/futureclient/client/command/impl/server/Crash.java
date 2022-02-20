@@ -1,12 +1,12 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.command.impl.server;
+package me.friendly.exeter.command.impl.server;
 
-import com.gitlab.nuf.api.stopwatch.Stopwatch;
-import com.gitlab.nuf.exeter.command.Argument;
-import com.gitlab.nuf.exeter.command.Command;
 import java.util.Objects;
+import me.friendly.api.stopwatch.Stopwatch;
+import me.friendly.exeter.command.Argument;
+import me.friendly.exeter.command.Command;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -33,7 +33,7 @@ extends Command {
                 String[] abc;
                 for (String initial : abc = new String[]{"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "w", "x", "y", "z"}) {
                     if (!this.stopwatch.hasCompleted(500L)) continue;
-                    this.minecraft.thePlayer.sendChatMessage(String.format("/pex user %s group set Number", initial));
+                    this.minecraft.thePlayer.sendChatMessage(String.format("/permissionsex:pex user %s group set Number", initial));
                     this.stopwatch.reset();
                 }
                 break;
@@ -85,8 +85,8 @@ extends Command {
                 plant.stackSize = 64;
                 plant.setItemDamage(69);
                 for (index = 0; index < 9; ++index) {
-                    ItemStack is2 = this.minecraft.thePlayer.inventory.getStackInSlot(index);
-                    if (!Objects.nonNull(is2) || Item.getIdFromItem(is2.getItem()) != 175 || is2.getItemDamage() != 1337 || is2.stackSize == 64) continue;
+                    ItemStack is = this.minecraft.thePlayer.inventory.getStackInSlot(index);
+                    if (!Objects.nonNull(is) || Item.getIdFromItem(is.getItem()) != 175 || is.getItemDamage() != 1337 || is.stackSize == 64) continue;
                     this.minecraft.thePlayer.sendQueue.addToSendQueue(new C10PacketCreativeInventoryAction(this.minecraft.thePlayer.inventory.currentItem + 36, plant));
                     this.minecraft.thePlayer.inventory.setInventorySlotContents(this.minecraft.thePlayer.inventory.currentItem, plant);
                 }

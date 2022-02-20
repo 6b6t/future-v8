@@ -1,11 +1,11 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.config;
+package me.friendly.exeter.config;
 
-import com.gitlab.nuf.api.registry.ListRegistry;
-import com.gitlab.nuf.exeter.config.Config;
 import java.util.ArrayList;
+import me.friendly.api.registry.ListRegistry;
+import me.friendly.exeter.config.Config;
 
 public final class ConfigManager
 extends ListRegistry<Config> {

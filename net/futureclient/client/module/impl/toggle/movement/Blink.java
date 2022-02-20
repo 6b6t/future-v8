@@ -5,20 +5,20 @@
  *  com.mojang.authlib.GameProfile
  *  org.lwjgl.opengl.GL11
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.movement;
+package me.friendly.exeter.module.impl.toggle.movement;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.api.minecraft.render.RenderMethods;
-import com.gitlab.nuf.exeter.events.MotionUpdateEvent;
-import com.gitlab.nuf.exeter.events.PacketEvent;
-import com.gitlab.nuf.exeter.events.RenderEvent;
-import com.gitlab.nuf.exeter.module.ModuleType;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
-import com.gitlab.nuf.exeter.properties.Property;
 import com.mojang.authlib.GameProfile;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import me.friendly.api.event.Listener;
+import me.friendly.api.minecraft.render.RenderMethods;
+import me.friendly.exeter.events.MotionUpdateEvent;
+import me.friendly.exeter.events.PacketEvent;
+import me.friendly.exeter.events.RenderEvent;
+import me.friendly.exeter.module.ModuleType;
+import me.friendly.exeter.module.ToggleableModule;
+import me.friendly.exeter.properties.Property;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.network.Packet;
@@ -67,10 +67,10 @@ extends ToggleableModule {
                 GL11.glColor4f((float)0.27f, (float)0.7f, (float)0.27f, (float)1.0f);
                 GL11.glBegin((int)3);
                 Blink.this.crumbs.forEach(crumb -> {
-                    double x2 = crumb.getX() - ((Blink)Blink.this).minecraft.getRenderManager().renderPosX;
-                    double y2 = crumb.getY() - (double)((Blink)Blink.this).minecraft.thePlayer.height + 3.0 - ((Blink)Blink.this).minecraft.getRenderManager().renderPosY;
-                    double z2 = crumb.getZ() - ((Blink)Blink.this).minecraft.getRenderManager().renderPosZ;
-                    GL11.glVertex3d((double)x2, (double)y2, (double)z2);
+                    double x = crumb.getX() - ((Blink)Blink.this).minecraft.getRenderManager().renderPosX;
+                    double y = crumb.getY() - (double)((Blink)Blink.this).minecraft.thePlayer.height + 3.0 - ((Blink)Blink.this).minecraft.getRenderManager().renderPosY;
+                    double z = crumb.getZ() - ((Blink)Blink.this).minecraft.getRenderManager().renderPosZ;
+                    GL11.glVertex3d((double)x, (double)y, (double)z);
                 });
                 GL11.glEnd();
                 RenderMethods.disableGL3D();
@@ -98,11 +98,11 @@ extends ToggleableModule {
         this.minecraft.theWorld.removeEntityFromWorld(-1337);
     }
 
-    private boolean isRecorded(double x2, double y2, double z2) {
+    private boolean isRecorded(double x, double y, double z) {
         Iterator<Crumb> iterator = this.crumbs.iterator();
         if (iterator.hasNext()) {
             Crumb crumb = iterator.next();
-            return crumb.getX() == x2 && crumb.getY() == y2 && crumb.getZ() == z2;
+            return crumb.getX() == x && crumb.getY() == y && crumb.getZ() == z;
         }
         return false;
     }
@@ -112,10 +112,10 @@ extends ToggleableModule {
         private final double y;
         private final double z;
 
-        public Crumb(double x2, double y2, double z2) {
-            this.x = x2;
-            this.y = y2;
-            this.z = z2;
+        public Crumb(double x, double y, double z) {
+            this.x = x;
+            this.y = y;
+            this.z = z;
         }
 
         public double getX() {

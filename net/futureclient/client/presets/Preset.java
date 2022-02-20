@@ -1,9 +1,9 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.presets;
+package me.friendly.exeter.presets;
 
-import com.gitlab.nuf.api.interfaces.Labeled;
+import me.friendly.api.interfaces.Labeled;
 
 public abstract class Preset
 implements Labeled {

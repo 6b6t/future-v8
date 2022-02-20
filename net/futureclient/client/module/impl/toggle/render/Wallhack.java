@@ -4,14 +4,14 @@
  * Could not load the following classes:
  *  org.lwjgl.opengl.GL11
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.render;
+package me.friendly.exeter.module.impl.toggle.render;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.exeter.events.RenderChestEvent;
-import com.gitlab.nuf.exeter.events.RenderEntityEvent;
-import com.gitlab.nuf.exeter.module.ModuleType;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
-import com.gitlab.nuf.exeter.properties.Property;
+import me.friendly.api.event.Listener;
+import me.friendly.exeter.events.RenderChestEvent;
+import me.friendly.exeter.events.RenderEntityEvent;
+import me.friendly.exeter.module.ModuleType;
+import me.friendly.exeter.module.ToggleableModule;
+import me.friendly.exeter.properties.Property;
 import org.lwjgl.opengl.GL11;
 
 public final class Wallhack

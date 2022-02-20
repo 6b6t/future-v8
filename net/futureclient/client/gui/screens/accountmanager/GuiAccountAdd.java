@@ -4,13 +4,13 @@
  * Could not load the following classes:
  *  org.lwjgl.input.Keyboard
  */
-package com.gitlab.nuf.exeter.gui.screens.accountmanager;
+package me.friendly.exeter.gui.screens.accountmanager;
 
-import com.gitlab.nuf.exeter.core.Exeter;
-import com.gitlab.nuf.exeter.gui.screens.accountmanager.Account;
-import com.gitlab.nuf.exeter.gui.screens.accountmanager.GuiAccountScreen;
-import com.gitlab.nuf.exeter.gui.screens.accountmanager.GuiPasswordField;
 import java.io.IOException;
+import me.friendly.exeter.core.Exeter;
+import me.friendly.exeter.gui.screens.accountmanager.Account;
+import me.friendly.exeter.gui.screens.accountmanager.GuiAccountScreen;
+import me.friendly.exeter.gui.screens.accountmanager.GuiPasswordField;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
@@ -47,14 +47,14 @@ extends GuiScreen {
     }
 
     @Override
-    public void mouseClicked(int x2, int y2, int b2) {
-        this.usernameBox.mouseClicked(x2, y2, b2);
-        this.passwordBox.mouseClicked(x2, y2, b2);
+    public void mouseClicked(int x, int y, int b) {
+        this.usernameBox.mouseClicked(x, y, b);
+        this.passwordBox.mouseClicked(x, y, b);
         try {
-            super.mouseClicked(x2, y2, b2);
+            super.mouseClicked(x, y, b);
         }
-        catch (Exception e2) {
-            e2.printStackTrace();
+        catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

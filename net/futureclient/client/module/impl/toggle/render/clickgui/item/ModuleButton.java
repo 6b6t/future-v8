@@ -1,21 +1,21 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.render.clickgui.item;
+package me.friendly.exeter.module.impl.toggle.render.clickgui.item;
 
-import com.gitlab.nuf.api.minecraft.render.CustomFont;
-import com.gitlab.nuf.exeter.module.Module;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
-import com.gitlab.nuf.exeter.module.impl.toggle.render.clickgui.ClickGui;
-import com.gitlab.nuf.exeter.module.impl.toggle.render.clickgui.item.Button;
-import com.gitlab.nuf.exeter.module.impl.toggle.render.clickgui.item.Item;
-import com.gitlab.nuf.exeter.module.impl.toggle.render.clickgui.item.properties.BooleanButton;
-import com.gitlab.nuf.exeter.module.impl.toggle.render.clickgui.item.properties.EnumButton;
-import com.gitlab.nuf.exeter.properties.EnumProperty;
-import com.gitlab.nuf.exeter.properties.NumberProperty;
-import com.gitlab.nuf.exeter.properties.Property;
 import java.util.ArrayList;
 import java.util.List;
+import me.friendly.api.minecraft.render.CustomFont;
+import me.friendly.exeter.module.Module;
+import me.friendly.exeter.module.ToggleableModule;
+import me.friendly.exeter.module.impl.toggle.render.clickgui.ClickGui;
+import me.friendly.exeter.module.impl.toggle.render.clickgui.item.Button;
+import me.friendly.exeter.module.impl.toggle.render.clickgui.item.Item;
+import me.friendly.exeter.module.impl.toggle.render.clickgui.item.properties.BooleanButton;
+import me.friendly.exeter.module.impl.toggle.render.clickgui.item.properties.EnumButton;
+import me.friendly.exeter.properties.EnumProperty;
+import me.friendly.exeter.properties.NumberProperty;
+import me.friendly.exeter.properties.Property;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.util.ResourceLocation;

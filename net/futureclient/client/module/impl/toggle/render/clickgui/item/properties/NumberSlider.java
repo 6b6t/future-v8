@@ -1,14 +1,14 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.render.clickgui.item.properties;
+package me.friendly.exeter.module.impl.toggle.render.clickgui.item.properties;
 
-import com.gitlab.nuf.api.minecraft.render.CustomFont;
-import com.gitlab.nuf.api.minecraft.render.RenderMethods;
-import com.gitlab.nuf.exeter.module.impl.toggle.render.clickgui.ClickGui;
-import com.gitlab.nuf.exeter.module.impl.toggle.render.clickgui.Panel;
-import com.gitlab.nuf.exeter.module.impl.toggle.render.clickgui.item.Item;
-import com.gitlab.nuf.exeter.properties.NumberProperty;
+import me.friendly.api.minecraft.render.CustomFont;
+import me.friendly.api.minecraft.render.RenderMethods;
+import me.friendly.exeter.module.impl.toggle.render.clickgui.ClickGui;
+import me.friendly.exeter.module.impl.toggle.render.clickgui.Panel;
+import me.friendly.exeter.module.impl.toggle.render.clickgui.item.Item;
+import me.friendly.exeter.properties.NumberProperty;
 
 public class NumberSlider
 extends Item {

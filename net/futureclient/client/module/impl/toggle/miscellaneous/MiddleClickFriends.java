@@ -1,21 +1,21 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.miscellaneous;
+package me.friendly.exeter.module.impl.toggle.miscellaneous;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.exeter.core.Exeter;
-import com.gitlab.nuf.exeter.events.InputEvent;
-import com.gitlab.nuf.exeter.friend.Friend;
-import com.gitlab.nuf.exeter.module.ModuleType;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
+import me.friendly.api.event.Listener;
+import me.friendly.exeter.core.Exeter;
+import me.friendly.exeter.events.InputEvent;
+import me.friendly.exeter.friend.Friend;
+import me.friendly.exeter.module.ModuleType;
+import me.friendly.exeter.module.ToggleableModule;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MovingObjectPosition;
 
 public final class MiddleClickFriends
 extends ToggleableModule {
     public MiddleClickFriends() {
-        super("Middle Click", new String[]{"middleclick", "mcf", "middleclick"}, ModuleType.MISCELLANEOUS);
+        super("MiddleClick", new String[]{"middleclick", "mcf", "middleclick"}, ModuleType.MISCELLANEOUS);
         this.listeners.add(new Listener<InputEvent>("middle_click_input_listener"){
 
             @Override

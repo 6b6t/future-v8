@@ -1,10 +1,10 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.command.impl.player;
+package me.friendly.exeter.command.impl.player;
 
-import com.gitlab.nuf.exeter.command.Argument;
-import com.gitlab.nuf.exeter.command.Command;
+import me.friendly.exeter.command.Argument;
+import me.friendly.exeter.command.Command;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.item.ItemStack;
@@ -47,9 +47,9 @@ extends Command {
         if (animal.isChild()) return false;
         if (animal.isInLove()) return false;
         if (animal.getGrowingAge() != 0) return false;
-        float f2 = this.minecraft.thePlayer.getDistanceToEntity(animal);
+        float f = this.minecraft.thePlayer.getDistanceToEntity(animal);
         int n = this.minecraft.thePlayer.canEntityBeSeen(animal) ? 6 : 3;
-        if (!(f2 < (float)n)) return false;
+        if (!(f < (float)n)) return false;
         return true;
     }
 }

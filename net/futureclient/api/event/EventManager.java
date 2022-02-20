@@ -1,11 +1,11 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.api.event;
+package me.friendly.api.event;
 
-import com.gitlab.nuf.api.event.Event;
-import com.gitlab.nuf.api.event.Listener;
 import java.util.List;
+import me.friendly.api.event.Event;
+import me.friendly.api.event.Listener;
 
 public interface EventManager {
     public void register(Listener var1);

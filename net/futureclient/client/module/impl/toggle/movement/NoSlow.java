@@ -1,15 +1,18 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.movement;
+package me.friendly.exeter.module.impl.toggle.movement;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.api.minecraft.helper.PlayerHelper;
-import com.gitlab.nuf.exeter.events.BlockSoulSandSlowdownEvent;
-import com.gitlab.nuf.exeter.events.ItemInUseEvent;
-import com.gitlab.nuf.exeter.events.MotionUpdateEvent;
-import com.gitlab.nuf.exeter.module.ModuleType;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
+import me.friendly.api.event.Listener;
+import me.friendly.api.minecraft.helper.PlayerHelper;
+import me.friendly.exeter.core.Exeter;
+import me.friendly.exeter.events.BlockSoulSandSlowdownEvent;
+import me.friendly.exeter.events.ItemInUseEvent;
+import me.friendly.exeter.events.MotionUpdateEvent;
+import me.friendly.exeter.module.ModuleType;
+import me.friendly.exeter.module.ToggleableModule;
+import me.friendly.exeter.module.impl.toggle.combat.AutoHeal;
+import me.friendly.exeter.properties.EnumProperty;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 import net.minecraft.util.BlockPos;
@@ -18,12 +21,15 @@ import net.minecraft.util.EnumFacing;
 public final class NoSlow
 extends ToggleableModule {
     public NoSlow() {
-        super("No Slow", new String[]{"noslow", "noslowdown", "ns"}, ModuleType.MOVEMENT);
+        super("NoSlow", new String[]{"noslow", "noslowdown", "ns"}, ModuleType.MOVEMENT);
         this.listeners.add(new Listener<MotionUpdateEvent>("no_slow_motion_update_listener"){
 
             @Override
             public void call(MotionUpdateEvent event) {
-                if (((NoSlow)NoSlow.this).minecraft.thePlayer.isBlocking()) {
+                AutoHeal autoHeal = (AutoHeal)Exeter.getInstance().getModuleManager().getModuleByAlias("autoheal");
+                EnumProperty mode = (EnumProperty)autoHeal.getPropertyByAlias("Mode");
+                boolean isPotting = autoHeal.isPotting();
+                if (((NoSlow)NoSlow.this).minecraft.thePlayer.isBlocking() && !isPotting) {
                     if (PlayerHelper.isMoving()) {
                         switch (event.getTime()) {
                             case BEFORE: {
@@ -45,7 +51,7 @@ extends ToggleableModule {
             @Override
             public void call(ItemInUseEvent event) {
                 if (!((NoSlow)NoSlow.this).minecraft.thePlayer.isSneaking()) {
-                    event.setSpeed(1.7f);
+                    event.setSpeed(1.0f);
                 }
             }
         });

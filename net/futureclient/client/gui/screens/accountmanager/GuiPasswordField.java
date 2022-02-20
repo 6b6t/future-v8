@@ -4,7 +4,7 @@
  * Could not load the following classes:
  *  org.lwjgl.opengl.GL11
  */
-package com.gitlab.nuf.exeter.gui.screens.accountmanager;
+package me.friendly.exeter.gui.screens.accountmanager;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -273,7 +273,7 @@ extends Gui {
 
     public void mouseClicked(int par1, int par2, int par3) {
         boolean var4;
-        boolean bl2 = var4 = par1 >= this.xPos && par1 < this.xPos + this.width && par2 >= this.yPos && par2 < this.yPos + this.height;
+        boolean bl = var4 = par1 >= this.xPos && par1 < this.xPos + this.width && par2 >= this.yPos && par2 < this.yPos + this.height;
         if (this.canLoseFocus) {
             this.setFocused(this.isEnabled && var4);
         }

@@ -1,35 +1,8 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.command;
+package me.friendly.exeter.command;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.api.registry.ListRegistry;
-import com.gitlab.nuf.exeter.command.Command;
-import com.gitlab.nuf.exeter.command.impl.client.Bind;
-import com.gitlab.nuf.exeter.command.impl.client.Friends;
-import com.gitlab.nuf.exeter.command.impl.client.Help;
-import com.gitlab.nuf.exeter.command.impl.client.Modules;
-import com.gitlab.nuf.exeter.command.impl.client.Prefix;
-import com.gitlab.nuf.exeter.command.impl.client.Presets;
-import com.gitlab.nuf.exeter.command.impl.client.Runtime;
-import com.gitlab.nuf.exeter.command.impl.client.Toggle;
-import com.gitlab.nuf.exeter.command.impl.player.Breed;
-import com.gitlab.nuf.exeter.command.impl.player.Damage;
-import com.gitlab.nuf.exeter.command.impl.player.Drown;
-import com.gitlab.nuf.exeter.command.impl.player.Grab;
-import com.gitlab.nuf.exeter.command.impl.player.HClip;
-import com.gitlab.nuf.exeter.command.impl.player.StackSize;
-import com.gitlab.nuf.exeter.command.impl.player.VClip;
-import com.gitlab.nuf.exeter.command.impl.server.Connect;
-import com.gitlab.nuf.exeter.command.impl.server.Crash;
-import com.gitlab.nuf.exeter.config.Config;
-import com.gitlab.nuf.exeter.core.Exeter;
-import com.gitlab.nuf.exeter.events.PacketEvent;
-import com.gitlab.nuf.exeter.logging.Logger;
-import com.gitlab.nuf.exeter.module.Module;
-import com.gitlab.nuf.exeter.properties.EnumProperty;
-import com.gitlab.nuf.exeter.properties.Property;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -37,6 +10,35 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.StringJoiner;
+import me.friendly.api.event.Listener;
+import me.friendly.api.registry.ListRegistry;
+import me.friendly.exeter.command.Command;
+import me.friendly.exeter.command.impl.client.Bind;
+import me.friendly.exeter.command.impl.client.Friends;
+import me.friendly.exeter.command.impl.client.Help;
+import me.friendly.exeter.command.impl.client.Modules;
+import me.friendly.exeter.command.impl.client.Prefix;
+import me.friendly.exeter.command.impl.client.Presets;
+import me.friendly.exeter.command.impl.client.Runtime;
+import me.friendly.exeter.command.impl.client.ScreenShot;
+import me.friendly.exeter.command.impl.client.Toggle;
+import me.friendly.exeter.command.impl.player.Breed;
+import me.friendly.exeter.command.impl.player.Damage;
+import me.friendly.exeter.command.impl.player.Drown;
+import me.friendly.exeter.command.impl.player.Grab;
+import me.friendly.exeter.command.impl.player.HClip;
+import me.friendly.exeter.command.impl.player.StackSize;
+import me.friendly.exeter.command.impl.player.VClip;
+import me.friendly.exeter.command.impl.server.Ban;
+import me.friendly.exeter.command.impl.server.Connect;
+import me.friendly.exeter.command.impl.server.Crash;
+import me.friendly.exeter.config.Config;
+import me.friendly.exeter.core.Exeter;
+import me.friendly.exeter.events.PacketEvent;
+import me.friendly.exeter.logging.Logger;
+import me.friendly.exeter.module.Module;
+import me.friendly.exeter.properties.EnumProperty;
+import me.friendly.exeter.properties.Property;
 import net.minecraft.network.play.client.C01PacketChatMessage;
 
 public final class CommandManager
@@ -63,6 +65,8 @@ extends ListRegistry<Command> {
         this.register(new Friends.Add());
         this.register(new Friends.Remove());
         this.register(new Bind());
+        this.register(new Ban());
+        this.register(new ScreenShot());
         this.registry.sort((cmd1, cmd2) -> cmd1.getAliases()[0].compareTo(cmd2.getAliases()[0]));
         Exeter.getInstance().getEventManager().register(new Listener<PacketEvent>("commands_packet_listener"){
 
@@ -86,7 +90,7 @@ extends ListRegistry<Command> {
                             try {
                                 Logger.getLogger().printToChat(command.dispatch(arguments));
                             }
-                            catch (Exception e2) {
+                            catch (Exception e) {
                                 Logger.getLogger().printToChat(String.format("%s%s %s", CommandManager.this.getPrefix(), alias, command.getSyntax()));
                             }
                         }
@@ -142,8 +146,8 @@ extends ListRegistry<Command> {
                                         StringJoiner stringJoiner = new StringJoiner(", ");
                                         Enum[] array = (Enum[])property.getValue().getClass().getEnumConstants();
                                         int length = array.length;
-                                        for (int i2 = 0; i2 < length; ++i2) {
-                                            stringJoiner.add(String.format("%s%s&7", array[i2].name().equalsIgnoreCase(property.getValue().toString()) ? "&a" : "&c", CommandManager.this.getFixedValue(array[i2])));
+                                        for (int i = 0; i < length; ++i) {
+                                            stringJoiner.add(String.format("%s%s&7", array[i].name().equalsIgnoreCase(property.getValue().toString()) ? "&a" : "&c", CommandManager.this.getFixedValue(array[i])));
                                         }
                                         Logger.getLogger().printToChat(String.format("Modes (%s) %s.", array.length, stringJoiner.toString()));
                                         continue;
@@ -160,8 +164,8 @@ extends ListRegistry<Command> {
                                 }
                                 Logger.getLogger().printToChat(String.format("%s &e[list|valuename] [list|get]", argz[0]));
                             }
-                            catch (Exception e3) {
-                                e3.printStackTrace();
+                            catch (Exception e) {
+                                e.printStackTrace();
                             }
                         }
                     }
@@ -180,28 +184,28 @@ extends ListRegistry<Command> {
                         this.getFile().createNewFile();
                     }
                 }
-                catch (IOException e2) {
-                    e2.printStackTrace();
+                catch (IOException e) {
+                    e.printStackTrace();
                 }
                 if (!this.getFile().exists()) {
                     return;
                 }
                 try {
                     String readLine;
-                    BufferedReader br2 = new BufferedReader(new FileReader(this.getFile()));
-                    while ((readLine = br2.readLine()) != null) {
+                    BufferedReader br = new BufferedReader(new FileReader(this.getFile()));
+                    while ((readLine = br.readLine()) != null) {
                         try {
                             String[] split = readLine.split(":");
                             CommandManager.this.prefix = split[0];
                         }
-                        catch (Exception e3) {
-                            e3.printStackTrace();
+                        catch (Exception e) {
+                            e.printStackTrace();
                         }
                     }
-                    br2.close();
+                    br.close();
                 }
-                catch (Exception e4) {
-                    e4.printStackTrace();
+                catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
 
@@ -212,17 +216,17 @@ extends ListRegistry<Command> {
                         this.getFile().createNewFile();
                     }
                 }
-                catch (IOException e2) {
-                    e2.printStackTrace();
+                catch (IOException e) {
+                    e.printStackTrace();
                 }
                 try {
-                    BufferedWriter bw2 = new BufferedWriter(new FileWriter(this.getFile()));
-                    bw2.write(CommandManager.this.prefix);
-                    bw2.newLine();
-                    bw2.close();
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(this.getFile()));
+                    bw.write(CommandManager.this.prefix);
+                    bw.newLine();
+                    bw.close();
                 }
-                catch (Exception e3) {
-                    e3.printStackTrace();
+                catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         };

@@ -1,14 +1,14 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.render;
+package me.friendly.exeter.module.impl.toggle.render;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.exeter.core.Exeter;
-import com.gitlab.nuf.exeter.events.ShowMessageEvent;
-import com.gitlab.nuf.exeter.module.ModuleType;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
-import com.gitlab.nuf.exeter.properties.EnumProperty;
+import me.friendly.api.event.Listener;
+import me.friendly.exeter.core.Exeter;
+import me.friendly.exeter.events.ShowMessageEvent;
+import me.friendly.exeter.module.ModuleType;
+import me.friendly.exeter.module.ToggleableModule;
+import me.friendly.exeter.properties.EnumProperty;
 import net.minecraft.util.EnumChatFormatting;
 
 public final class NameProtect
@@ -16,7 +16,7 @@ extends ToggleableModule {
     private final EnumProperty<EnumChatFormatting> color = new EnumProperty<EnumChatFormatting>(EnumChatFormatting.DARK_AQUA, "Color", "c");
 
     public NameProtect() {
-        super("Name Protect", new String[]{"nameprotect", "name", "protect", "np"}, ModuleType.RENDER);
+        super("NameProtect", new String[]{"nameprotect", "name", "protect", "np"}, ModuleType.RENDER);
         this.offerProperties(this.color);
         this.listeners.add(new Listener<ShowMessageEvent>("name_protect_show_message_listener"){
 

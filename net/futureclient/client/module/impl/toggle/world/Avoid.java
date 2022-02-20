@@ -1,13 +1,13 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.world;
+package me.friendly.exeter.module.impl.toggle.world;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.exeter.events.BlockBoundingBoxEvent;
-import com.gitlab.nuf.exeter.module.ModuleType;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
-import com.gitlab.nuf.exeter.properties.Property;
+import me.friendly.api.event.Listener;
+import me.friendly.exeter.events.BlockBoundingBoxEvent;
+import me.friendly.exeter.module.ModuleType;
+import me.friendly.exeter.module.ToggleableModule;
+import me.friendly.exeter.properties.Property;
 import net.minecraft.block.BlockCactus;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.AxisAlignedBB;

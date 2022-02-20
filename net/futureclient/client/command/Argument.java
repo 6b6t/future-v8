@@ -1,9 +1,9 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.command;
+package me.friendly.exeter.command;
 
-import com.gitlab.nuf.api.interfaces.Labeled;
+import me.friendly.api.interfaces.Labeled;
 
 public class Argument
 implements Labeled {

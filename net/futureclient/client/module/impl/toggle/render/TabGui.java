@@ -1,25 +1,28 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.render;
+package me.friendly.exeter.module.impl.toggle.render;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.exeter.core.Exeter;
-import com.gitlab.nuf.exeter.events.InputEvent;
-import com.gitlab.nuf.exeter.events.RenderGameOverlayEvent;
-import com.gitlab.nuf.exeter.module.ModuleType;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
-import com.gitlab.nuf.exeter.module.impl.active.render.TextGUI;
-import com.gitlab.nuf.exeter.module.impl.toggle.render.tabgui.GuiTabHandler;
-import com.gitlab.nuf.exeter.properties.Property;
+import me.friendly.api.event.Listener;
+import me.friendly.exeter.core.Exeter;
+import me.friendly.exeter.events.InputEvent;
+import me.friendly.exeter.events.RenderGameOverlayEvent;
+import me.friendly.exeter.module.ModuleType;
+import me.friendly.exeter.module.ToggleableModule;
+import me.friendly.exeter.module.impl.active.render.TextGUI;
+import me.friendly.exeter.module.impl.toggle.render.tabgui.GuiTabHandler;
+import me.friendly.exeter.properties.EnumProperty;
+import me.friendly.exeter.properties.Property;
 import net.minecraft.client.renderer.GlStateManager;
 
 public final class TabGui
 extends ToggleableModule {
     private GuiTabHandler guiTabHandler;
+    private final EnumProperty<Mode> mode = new EnumProperty<Mode>(Mode.DEFAULT, "mode", "m");
+    public int hexVal = -1152209207;
 
     public TabGui() {
-        super("Tab Gui", new String[]{"tabgui", "tg"}, ModuleType.RENDER);
+        super("TabGui", new String[]{"tabgui", "tg"}, ModuleType.RENDER);
         this.listeners.add(new Listener<RenderGameOverlayEvent>("tab_gui_render_game_overlay_listener"){
 
             @Override
@@ -109,6 +112,13 @@ extends ToggleableModule {
             }
         });
         this.setRunning(true);
+    }
+
+    private static enum Mode {
+        DEFAULT,
+        BLUE,
+        PURPLE;
+
     }
 }
 

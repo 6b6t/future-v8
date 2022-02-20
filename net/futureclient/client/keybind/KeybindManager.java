@@ -1,14 +1,14 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.keybind;
+package me.friendly.exeter.keybind;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.api.registry.ListRegistry;
-import com.gitlab.nuf.exeter.core.Exeter;
-import com.gitlab.nuf.exeter.events.InputEvent;
-import com.gitlab.nuf.exeter.keybind.Keybind;
 import java.util.ArrayList;
+import me.friendly.api.event.Listener;
+import me.friendly.api.registry.ListRegistry;
+import me.friendly.exeter.core.Exeter;
+import me.friendly.exeter.events.InputEvent;
+import me.friendly.exeter.keybind.Keybind;
 
 public final class KeybindManager
 extends ListRegistry<Keybind> {

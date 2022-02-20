@@ -1,16 +1,14 @@
-//Deobfuscated with https://github.com/SimplyProgrammer/Minecraft-Deobfuscator3000 using mappings "C:\Users\aesthetical\Documents\Minecraft\decomped\mappings\1.8.9"!
-
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.render;
+package me.friendly.exeter.module.impl.toggle.render;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.api.minecraft.render.RenderMethods;
-import com.gitlab.nuf.exeter.events.InputEvent;
-import com.gitlab.nuf.exeter.events.RenderEvent;
-import com.gitlab.nuf.exeter.module.ModuleType;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
+import me.friendly.api.event.Listener;
+import me.friendly.api.minecraft.render.RenderMethods;
+import me.friendly.exeter.events.InputEvent;
+import me.friendly.exeter.events.RenderEvent;
+import me.friendly.exeter.module.ModuleType;
+import me.friendly.exeter.module.ToggleableModule;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.util.AxisAlignedBB;
@@ -22,7 +20,7 @@ extends ToggleableModule {
     private Position position2;
 
     public WorldeditESP() {
-        super("Worldedit ESP", new String[]{"worldeditesp", "wee", "weesp"}, -2835568, ModuleType.RENDER);
+        super("WorldeditESP", new String[]{"worldeditesp", "wee", "weesp"}, -2835568, ModuleType.RENDER);
         this.listeners.add(new Listener<RenderEvent>("worldedit_esp_render_listener"){
 
             @Override
@@ -30,13 +28,13 @@ extends ToggleableModule {
                 GlStateManager.pushMatrix();
                 RenderMethods.enableGL3D();
                 if (WorldeditESP.this.position1 != null && WorldeditESP.this.position2 != null) {
-                    double x2 = (double)WorldeditESP.this.position1.getX() - ((WorldeditESP)WorldeditESP.this).minecraft.getRenderManager().renderPosX;
-                    double y2 = (double)WorldeditESP.this.position1.getY() - ((WorldeditESP)WorldeditESP.this).minecraft.getRenderManager().renderPosY;
-                    double z2 = (double)WorldeditESP.this.position1.getZ() - ((WorldeditESP)WorldeditESP.this).minecraft.getRenderManager().renderPosZ;
+                    double x = (double)WorldeditESP.this.position1.getX() - ((WorldeditESP)WorldeditESP.this).minecraft.getRenderManager().renderPosX;
+                    double y = (double)WorldeditESP.this.position1.getY() - ((WorldeditESP)WorldeditESP.this).minecraft.getRenderManager().renderPosY;
+                    double z = (double)WorldeditESP.this.position1.getZ() - ((WorldeditESP)WorldeditESP.this).minecraft.getRenderManager().renderPosZ;
                     double x1 = (double)WorldeditESP.this.position2.getX() - ((WorldeditESP)WorldeditESP.this).minecraft.getRenderManager().renderPosX;
                     double y1 = (double)WorldeditESP.this.position2.getY() - ((WorldeditESP)WorldeditESP.this).minecraft.getRenderManager().renderPosY;
                     double z1 = (double)WorldeditESP.this.position2.getZ() - ((WorldeditESP)WorldeditESP.this).minecraft.getRenderManager().renderPosZ;
-                    AxisAlignedBB axisAlignedBB = new AxisAlignedBB(x2, y2, z2, x1, y1, z1);
+                    AxisAlignedBB axisAlignedBB = new AxisAlignedBB(x, y, z, x1, y1, z1);
                     GlStateManager.color(0.1f, 0.1f, 0.3f, 1.0f);
                     RenderMethods.renderCrosses(axisAlignedBB);
                     RenderMethods.drawOutlinedBox(axisAlignedBB);
@@ -52,12 +50,12 @@ extends ToggleableModule {
                 switch (event.getType()) {
                     case MOUSE_LEFT_CLICK: {
                         if (((WorldeditESP)WorldeditESP.this).minecraft.thePlayer.inventory.getCurrentItem() == null || !(((WorldeditESP)WorldeditESP.this).minecraft.thePlayer.inventory.getCurrentItem().getItem() instanceof ItemAxe) || ((WorldeditESP)WorldeditESP.this).minecraft.objectMouseOver == null || ((WorldeditESP)WorldeditESP.this).minecraft.objectMouseOver.typeOfHit != MovingObjectPosition.MovingObjectType.BLOCK) break;
-                        WorldeditESP.this.position1 = new Position(((WorldeditESP)WorldeditESP.this).minecraft.objectMouseOver.getBlockPos().getX(), ((WorldeditESP)WorldeditESP.this).minecraft.objectMouseOver.getBlockPos().getY(), ((WorldeditESP)WorldeditESP.this).minecraft.objectMouseOver.getBlockPos().getZ());
+                        WorldeditESP.this.position1 = new Position(((WorldeditESP)WorldeditESP.this).minecraft.objectMouseOver.func_178782_a().getX(), ((WorldeditESP)WorldeditESP.this).minecraft.objectMouseOver.func_178782_a().getY(), ((WorldeditESP)WorldeditESP.this).minecraft.objectMouseOver.func_178782_a().getZ());
                         break;
                     }
                     case MOUSE_RIGHT_CLICK: {
                         if (((WorldeditESP)WorldeditESP.this).minecraft.thePlayer.inventory.getCurrentItem() == null || !(((WorldeditESP)WorldeditESP.this).minecraft.thePlayer.inventory.getCurrentItem().getItem() instanceof ItemAxe) || ((WorldeditESP)WorldeditESP.this).minecraft.objectMouseOver == null || ((WorldeditESP)WorldeditESP.this).minecraft.objectMouseOver.typeOfHit != MovingObjectPosition.MovingObjectType.BLOCK) break;
-                        WorldeditESP.this.position2 = new Position(((WorldeditESP)WorldeditESP.this).minecraft.objectMouseOver.getBlockPos().getX(), ((WorldeditESP)WorldeditESP.this).minecraft.objectMouseOver.getBlockPos().getY() + 1, ((WorldeditESP)WorldeditESP.this).minecraft.objectMouseOver.getBlockPos().getZ());
+                        WorldeditESP.this.position2 = new Position(((WorldeditESP)WorldeditESP.this).minecraft.objectMouseOver.func_178782_a().getX(), ((WorldeditESP)WorldeditESP.this).minecraft.objectMouseOver.func_178782_a().getY() + 1, ((WorldeditESP)WorldeditESP.this).minecraft.objectMouseOver.func_178782_a().getZ());
                     }
                 }
             }
@@ -83,10 +81,10 @@ extends ToggleableModule {
         private int y;
         private int z;
 
-        public Position(int x2, int y2, int z2) {
-            this.x = x2;
-            this.y = y2;
-            this.z = z2;
+        public Position(int x, int y, int z) {
+            this.x = x;
+            this.y = y;
+            this.z = z;
         }
 
         public int getX() {

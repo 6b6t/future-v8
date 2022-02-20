@@ -1,17 +1,15 @@
-//Deobfuscated with https://github.com/SimplyProgrammer/Minecraft-Deobfuscator3000 using mappings "C:\Users\aesthetical\Documents\Minecraft\decomped\mappings\1.8.9"!
-
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.world;
+package me.friendly.exeter.module.impl.toggle.world;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.api.minecraft.helper.PlayerHelper;
-import com.gitlab.nuf.exeter.events.MotionUpdateEvent;
-import com.gitlab.nuf.exeter.module.ModuleType;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
-import com.gitlab.nuf.exeter.properties.EnumProperty;
-import com.gitlab.nuf.exeter.properties.Property;
+import me.friendly.api.event.Listener;
+import me.friendly.api.minecraft.helper.PlayerHelper;
+import me.friendly.exeter.events.MotionUpdateEvent;
+import me.friendly.exeter.module.ModuleType;
+import me.friendly.exeter.module.ToggleableModule;
+import me.friendly.exeter.properties.EnumProperty;
+import me.friendly.exeter.properties.Property;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockDirt;
@@ -37,23 +35,23 @@ extends ToggleableModule {
     private BlockPos focus;
 
     public AutoFarm() {
-        super("Auto Farm", new String[]{"autoharvest", "autoplant", "af"}, 245820, ModuleType.WORLD);
+        super("AutoFarm", new String[]{"autoharvest", "autoplant", "af"}, 245820, ModuleType.WORLD);
         this.offerProperties(this.mode, this.silent);
         this.listeners.add(new Listener<MotionUpdateEvent>("auto_farm_motion_update_listener"){
 
             @Override
             public void call(MotionUpdateEvent event) {
                 AutoFarm.this.setTag(String.format("Auto %s", AutoFarm.this.mode.getFixedValue()));
-                for (double y2 = event.getPositionY() + 6.0; y2 > event.getPositionY() - 6.0; y2 -= 1.0) {
-                    for (double x2 = event.getPositionX() - 6.0; x2 < event.getPositionX() + 6.0; x2 += 1.0) {
-                        for (double z2 = event.getPositionZ() - 6.0; z2 < event.getPositionZ() + 6.0; z2 += 1.0) {
-                            BlockPos position = new BlockPos(x2, y2, z2);
+                for (double y = event.getPositionY() + 6.0; y > event.getPositionY() - 6.0; y -= 1.0) {
+                    for (double x = event.getPositionX() - 6.0; x < event.getPositionX() + 6.0; x += 1.0) {
+                        for (double z = event.getPositionZ() - 6.0; z < event.getPositionZ() + 6.0; z += 1.0) {
+                            BlockPos position = new BlockPos(x, y, z);
                             if (!AutoFarm.this.isBlockValid(position)) continue;
                             if (AutoFarm.this.focus == null) {
                                 AutoFarm.this.focus = position;
                                 continue;
                             }
-                            if (!(((AutoFarm)AutoFarm.this).minecraft.thePlayer.getDistance(AutoFarm.this.focus.getX(), AutoFarm.this.focus.getY(), AutoFarm.this.focus.getZ()) > ((AutoFarm)AutoFarm.this).minecraft.thePlayer.getDistance(x2, y2, z2))) continue;
+                            if (!(((AutoFarm)AutoFarm.this).minecraft.thePlayer.getDistance(AutoFarm.this.focus.getX(), AutoFarm.this.focus.getY(), AutoFarm.this.focus.getZ()) > ((AutoFarm)AutoFarm.this).minecraft.thePlayer.getDistance(x, y, z))) continue;
                             AutoFarm.this.focus = position;
                         }
                     }
@@ -74,10 +72,10 @@ extends ToggleableModule {
                     if (AutoFarm.this.isBlockValid(AutoFarm.this.focus)) {
                         if (event.getTime() == MotionUpdateEvent.Time.AFTER) {
                             if (AutoFarm.this.mode.getValue() == Mode.PLANT) {
-                                if (((AutoFarm)AutoFarm.this).minecraft.playerController.onPlayerRightClick(((AutoFarm)AutoFarm.this).minecraft.thePlayer, ((AutoFarm)AutoFarm.this).minecraft.theWorld, ((AutoFarm)AutoFarm.this).minecraft.thePlayer.getCurrentEquippedItem(), AutoFarm.this.focus, AutoFarm.this.getFacingDirectionToPosition(AutoFarm.this.focus), new Vec3(AutoFarm.this.focus.getX(), AutoFarm.this.focus.getY(), AutoFarm.this.focus.getZ()))) {
+                                if (((AutoFarm)AutoFarm.this).minecraft.playerController.func_178890_a(((AutoFarm)AutoFarm.this).minecraft.thePlayer, ((AutoFarm)AutoFarm.this).minecraft.theWorld, ((AutoFarm)AutoFarm.this).minecraft.thePlayer.getCurrentEquippedItem(), AutoFarm.this.focus, AutoFarm.this.getFacingDirectionToPosition(AutoFarm.this.focus), new Vec3(AutoFarm.this.focus.getX(), AutoFarm.this.focus.getY(), AutoFarm.this.focus.getZ()))) {
                                     ((AutoFarm)AutoFarm.this).minecraft.thePlayer.swingItem();
                                 }
-                            } else if (AutoFarm.this.mode.getValue() == Mode.HARVEST && ((AutoFarm)AutoFarm.this).minecraft.playerController.clickBlock(AutoFarm.this.focus, AutoFarm.this.getFacingDirectionToPosition(AutoFarm.this.focus))) {
+                            } else if (AutoFarm.this.mode.getValue() == Mode.HARVEST && ((AutoFarm)AutoFarm.this).minecraft.playerController.func_180511_b(AutoFarm.this.focus, AutoFarm.this.getFacingDirectionToPosition(AutoFarm.this.focus))) {
                                 ((AutoFarm)AutoFarm.this).minecraft.thePlayer.swingItem();
                             }
                         }

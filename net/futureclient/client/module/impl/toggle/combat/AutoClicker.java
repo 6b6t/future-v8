@@ -4,16 +4,16 @@
  * Could not load the following classes:
  *  org.lwjgl.input.Mouse
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.combat;
+package me.friendly.exeter.module.impl.toggle.combat;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.api.stopwatch.Stopwatch;
-import com.gitlab.nuf.exeter.core.Exeter;
-import com.gitlab.nuf.exeter.events.PacketEvent;
-import com.gitlab.nuf.exeter.events.TickEvent;
-import com.gitlab.nuf.exeter.module.ModuleType;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
-import com.gitlab.nuf.exeter.properties.NumberProperty;
+import me.friendly.api.event.Listener;
+import me.friendly.api.stopwatch.Stopwatch;
+import me.friendly.exeter.core.Exeter;
+import me.friendly.exeter.events.PacketEvent;
+import me.friendly.exeter.events.TickEvent;
+import me.friendly.exeter.module.ModuleType;
+import me.friendly.exeter.module.ToggleableModule;
+import me.friendly.exeter.properties.NumberProperty;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.play.client.C02PacketUseEntity;
@@ -25,7 +25,7 @@ extends ToggleableModule {
     private final Stopwatch stopwatch = new Stopwatch();
 
     public AutoClicker() {
-        super("Auto Clicker", new String[]{"autoclicker", "ac", "clicker"}, -4615980, ModuleType.COMBAT);
+        super("AutoClicker", new String[]{"autoclicker", "ac", "clicker"}, -4615980, ModuleType.COMBAT);
         this.offerProperties(this.cps);
         this.listeners.add(new Listener<TickEvent>("auto_clicker_tick_listener"){
 

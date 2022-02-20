@@ -1,9 +1,9 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.render.tabgui.item;
+package me.friendly.exeter.module.impl.toggle.render.tabgui.item;
 
-import com.gitlab.nuf.exeter.module.ToggleableModule;
+import me.friendly.exeter.module.ToggleableModule;
 
 public class GuiItem {
     private final ToggleableModule toggleableModule;

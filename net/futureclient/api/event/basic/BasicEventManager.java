@@ -1,14 +1,14 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.api.event.basic;
+package me.friendly.api.event.basic;
 
-import com.gitlab.nuf.api.event.Event;
-import com.gitlab.nuf.api.event.EventManager;
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.api.event.filter.Filter;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import me.friendly.api.event.Event;
+import me.friendly.api.event.EventManager;
+import me.friendly.api.event.Listener;
+import me.friendly.api.event.filter.Filter;
 import net.minecraft.client.Minecraft;
 
 public final class BasicEventManager

@@ -1,9 +1,9 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.render.clickgui.item;
+package me.friendly.exeter.module.impl.toggle.render.clickgui.item;
 
-import com.gitlab.nuf.api.interfaces.Labeled;
+import me.friendly.api.interfaces.Labeled;
 
 public class Item
 implements Labeled {
@@ -17,9 +17,9 @@ implements Labeled {
         this.label = label;
     }
 
-    public void setLocation(float x2, float y2) {
-        this.x = x2;
-        this.y = y2;
+    public void setLocation(float x, float y) {
+        this.x = x;
+        this.y = y;
     }
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {

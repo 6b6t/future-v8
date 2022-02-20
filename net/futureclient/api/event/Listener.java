@@ -1,14 +1,14 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.api.event;
+package me.friendly.api.event;
 
-import com.gitlab.nuf.api.event.Event;
-import com.gitlab.nuf.api.event.filter.Filter;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import me.friendly.api.event.Event;
+import me.friendly.api.event.filter.Filter;
 
 public abstract class Listener<E extends Event> {
     private final String identifier;

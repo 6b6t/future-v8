@@ -1,9 +1,9 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.properties;
+package me.friendly.exeter.properties;
 
-import com.gitlab.nuf.exeter.properties.Property;
+import me.friendly.exeter.properties.Property;
 
 public class EnumProperty<T extends Enum>
 extends Property<T> {
@@ -19,33 +19,33 @@ extends Property<T> {
     public void setValue(String value) {
         Enum[] array = (Enum[])((Enum)this.getValue()).getClass().getEnumConstants();
         int length = array.length;
-        for (int i2 = 0; i2 < length; ++i2) {
-            if (!array[i2].name().equalsIgnoreCase(value)) continue;
-            this.value = array[i2];
+        for (int i = 0; i < length; ++i) {
+            if (!array[i].name().equalsIgnoreCase(value)) continue;
+            this.value = array[i];
         }
     }
 
     public void increment() {
         Enum[] array = (Enum[])((Enum)this.getValue()).getClass().getEnumConstants();
         int length = array.length;
-        for (int i2 = 0; i2 < length; ++i2) {
-            if (!array[i2].name().equalsIgnoreCase(this.getFixedValue())) continue;
-            if (++i2 > array.length - 1) {
-                i2 = 0;
+        for (int i = 0; i < length; ++i) {
+            if (!array[i].name().equalsIgnoreCase(this.getFixedValue())) continue;
+            if (++i > array.length - 1) {
+                i = 0;
             }
-            this.setValue(array[i2].toString());
+            this.setValue(array[i].toString());
         }
     }
 
     public void decrement() {
         Enum[] array = (Enum[])((Enum)this.getValue()).getClass().getEnumConstants();
         int length = array.length;
-        for (int i2 = 0; i2 < length; ++i2) {
-            if (!array[i2].name().equalsIgnoreCase(this.getFixedValue())) continue;
-            if (--i2 < 0) {
-                i2 = array.length - 1;
+        for (int i = 0; i < length; ++i) {
+            if (!array[i].name().equalsIgnoreCase(this.getFixedValue())) continue;
+            if (--i < 0) {
+                i = array.length - 1;
             }
-            this.setValue(array[i2].toString());
+            this.setValue(array[i].toString());
         }
     }
 }

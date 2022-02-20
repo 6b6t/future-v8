@@ -1,9 +1,9 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.keybind;
+package me.friendly.exeter.keybind;
 
-import com.gitlab.nuf.api.interfaces.Labeled;
+import me.friendly.api.interfaces.Labeled;
 
 public abstract class Keybind
 implements Labeled {

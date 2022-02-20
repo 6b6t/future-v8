@@ -1,16 +1,16 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.command.impl.client;
+package me.friendly.exeter.command.impl.client;
 
-import com.gitlab.nuf.api.interfaces.Toggleable;
-import com.gitlab.nuf.exeter.command.Argument;
-import com.gitlab.nuf.exeter.command.Command;
-import com.gitlab.nuf.exeter.core.Exeter;
-import com.gitlab.nuf.exeter.module.Module;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
 import java.util.List;
 import java.util.StringJoiner;
+import me.friendly.api.interfaces.Toggleable;
+import me.friendly.exeter.command.Argument;
+import me.friendly.exeter.command.Command;
+import me.friendly.exeter.core.Exeter;
+import me.friendly.exeter.module.Module;
+import me.friendly.exeter.module.ToggleableModule;
 
 public final class Modules
 extends Command {

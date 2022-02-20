@@ -1,9 +1,9 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.friend;
+package me.friendly.exeter.friend;
 
-import com.gitlab.nuf.api.interfaces.Labeled;
+import me.friendly.api.interfaces.Labeled;
 
 public class Friend
 implements Labeled {

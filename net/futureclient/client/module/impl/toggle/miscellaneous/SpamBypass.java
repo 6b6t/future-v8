@@ -1,14 +1,14 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.miscellaneous;
+package me.friendly.exeter.module.impl.toggle.miscellaneous;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.api.stopwatch.Stopwatch;
-import com.gitlab.nuf.exeter.events.PacketEvent;
-import com.gitlab.nuf.exeter.module.ModuleType;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
-import com.gitlab.nuf.exeter.properties.NumberProperty;
+import me.friendly.api.event.Listener;
+import me.friendly.api.stopwatch.Stopwatch;
+import me.friendly.exeter.events.PacketEvent;
+import me.friendly.exeter.module.ModuleType;
+import me.friendly.exeter.module.ToggleableModule;
+import me.friendly.exeter.properties.NumberProperty;
 import net.minecraft.network.play.server.S02PacketChat;
 
 public final class SpamBypass
@@ -17,7 +17,7 @@ extends ToggleableModule {
     private final Stopwatch stopwatch = new Stopwatch();
 
     public SpamBypass() {
-        super("Spam Bypass", new String[]{"spambypass", "spam"}, -7289900, ModuleType.MISCELLANEOUS);
+        super("SpamBypass", new String[]{"spambypass", "spam"}, -7289900, ModuleType.MISCELLANEOUS);
         this.offerProperties(this.delay);
         this.listeners.add(new Listener<PacketEvent>("spam_bypass_packet_listener"){
 

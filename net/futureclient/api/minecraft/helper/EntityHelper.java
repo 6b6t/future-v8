@@ -1,9 +1,7 @@
-//Deobfuscated with https://github.com/SimplyProgrammer/Minecraft-Deobfuscator3000 using mappings "C:\Users\aesthetical\Documents\Minecraft\decomped\mappings\1.8.9"!
-
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.api.minecraft.helper;
+package me.friendly.api.minecraft.helper;
 
 import java.util.UUID;
 import net.minecraft.client.Minecraft;
@@ -15,13 +13,13 @@ import net.minecraft.util.MathHelper;
 public final class EntityHelper {
     private static Minecraft minecraft = Minecraft.getMinecraft();
 
-    public static Entity getClosestEntity(double x2, double y2, double z2, float distance) {
+    public static Entity getClosestEntity(double x, double y, double z, float distance) {
         double var9 = -1.0;
         Entity closestEntity = null;
         for (int loadedEntity = 0; loadedEntity < EntityHelper.minecraft.theWorld.loadedEntityList.size(); ++loadedEntity) {
             Entity entity = (Entity)EntityHelper.minecraft.theWorld.loadedEntityList.get(loadedEntity);
-            if (!IEntitySelector.NOT_SPECTATING.apply((Object)entity)) continue;
-            double distanceSq = entity.getDistanceSq(x2, y2, z2);
+            if (!IEntitySelector.field_180132_d.apply((Object)entity)) continue;
+            double distanceSq = entity.getDistanceSq(x, y, z);
             if (!((double)distance < 0.0) && !(distanceSq < (double)(distance * distance)) || var9 != -1.0 && !(distanceSq < var9)) continue;
             var9 = distanceSq;
             closestEntity = entity;

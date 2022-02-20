@@ -2,27 +2,27 @@
  * Decompiled with CFR 0.152.
  * 
  * Could not load the following classes:
- *  org.apache.commons.codec.digest.DigestUtils
  *  org.lwjgl.opengl.Display
  */
-package com.gitlab.nuf.exeter.core;
+package me.friendly.exeter.core;
 
-import com.gitlab.nuf.api.event.basic.BasicEventManager;
-import com.gitlab.nuf.exeter.command.CommandManager;
-import com.gitlab.nuf.exeter.config.ConfigManager;
-import com.gitlab.nuf.exeter.friend.FriendManager;
-import com.gitlab.nuf.exeter.gui.screens.accountmanager.AccountManager;
-import com.gitlab.nuf.exeter.keybind.KeybindManager;
-import com.gitlab.nuf.exeter.logging.Logger;
-import com.gitlab.nuf.exeter.module.ModuleManager;
 import java.io.File;
-import org.apache.commons.codec.digest.DigestUtils;
+import java.io.IOException;
+import me.friendly.api.event.basic.BasicEventManager;
+import me.friendly.exeter.command.CommandManager;
+import me.friendly.exeter.config.ConfigManager;
+import me.friendly.exeter.friend.FriendManager;
+import me.friendly.exeter.gui.screens.accountmanager.AccountManager;
+import me.friendly.exeter.keybind.KeybindManager;
+import me.friendly.exeter.logging.Logger;
+import me.friendly.exeter.module.ModuleManager;
+import me.friendly.exeter.plugin.PluginManager;
 import org.lwjgl.opengl.Display;
 
 public final class Exeter {
     private static Exeter instance = null;
     public static final String TITLE = "Exeter";
-    public static final int BUILD = 13;
+    public static final int BUILD = 23;
     public final long startTime = System.nanoTime() / 1000000L;
     private final BasicEventManager eventManager;
     private final KeybindManager keybindManager;
@@ -31,13 +31,10 @@ public final class Exeter {
     private final FriendManager friendManager;
     private final ConfigManager configManager;
     private final AccountManager accountManager;
+    private final PluginManager pluginManager;
     private final File directory;
 
     public Exeter() {
-        String hash = "9dbec2d9e12dad273a9e8c9312a43befb55643f077053f88dec2a03666044755";
-        if (!hash.equalsIgnoreCase(DigestUtils.sha256Hex((String)this.getWebsite()))) {
-            System.exit(0);
-        }
         Logger.getLogger().print("Initializing...");
         instance = this;
         this.directory = new File(System.getProperty("user.home"), "clarinet");
@@ -51,7 +48,16 @@ public final class Exeter {
         this.commandManager = new CommandManager();
         this.moduleManager = new ModuleManager();
         this.accountManager = new AccountManager();
+        this.pluginManager = new PluginManager();
         this.getConfigManager().getRegistry().forEach(config -> config.load(new Object[0]));
+        try {
+            this.pluginManager.onLoad();
+            System.out.println("Plugin manager started.");
+            System.out.println(this.pluginManager.getList() + "has been loaded.");
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
         Runtime.getRuntime().addShutdownHook(new Thread("Shutdown Hook Thread"){
 
             @Override
@@ -61,7 +67,7 @@ public final class Exeter {
                 Logger.getLogger().print("Shutdown.");
             }
         });
-        Display.setTitle((String)String.format("%s v14 b%s", TITLE, 13));
+        Display.setTitle((String)String.format("%s b%s  ", TITLE, 23));
         Logger.getLogger().print(String.format("Initialized, took %s milliseconds.", System.nanoTime() / 1000000L - this.startTime));
     }
 
@@ -97,12 +103,12 @@ public final class Exeter {
         return this.accountManager;
     }
 
-    public File getDirectory() {
-        return this.directory;
+    public PluginManager getPluginManager() {
+        return this.pluginManager;
     }
 
-    public String getWebsite() {
-        return "http://imnuf.ml/";
+    public File getDirectory() {
+        return this.directory;
     }
 }
 

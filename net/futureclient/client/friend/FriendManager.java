@@ -8,12 +8,8 @@
  *  com.google.gson.JsonObject
  *  com.google.gson.JsonParser
  */
-package com.gitlab.nuf.exeter.friend;
+package me.friendly.exeter.friend;
 
-import com.gitlab.nuf.api.registry.ListRegistry;
-import com.gitlab.nuf.exeter.config.Config;
-import com.gitlab.nuf.exeter.core.Exeter;
-import com.gitlab.nuf.exeter.friend.Friend;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -24,6 +20,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
+import me.friendly.api.registry.ListRegistry;
+import me.friendly.exeter.config.Config;
+import me.friendly.exeter.core.Exeter;
+import me.friendly.exeter.friend.Friend;
 
 public final class FriendManager
 extends ListRegistry<Friend> {
@@ -39,8 +39,8 @@ extends ListRegistry<Friend> {
                         this.getFile().createNewFile();
                     }
                 }
-                catch (IOException e2) {
-                    e2.printStackTrace();
+                catch (IOException e) {
+                    e.printStackTrace();
                 }
                 if (!this.getFile().exists()) {
                     return;
@@ -48,8 +48,8 @@ extends ListRegistry<Friend> {
                 try (FileReader reader = new FileReader(this.getFile());){
                     root = new JsonParser().parse((Reader)reader);
                 }
-                catch (IOException e3) {
-                    e3.printStackTrace();
+                catch (IOException e) {
+                    e.printStackTrace();
                     return;
                 }
                 if (!(root instanceof JsonArray)) {
@@ -64,8 +64,8 @@ extends ListRegistry<Friend> {
                         JsonObject friendNode = (JsonObject)node;
                         Exeter.getInstance().getFriendManager().getRegistry().add(new Friend(friendNode.get("friend-label").getAsString(), friendNode.get("friend-alias").getAsString()));
                     }
-                    catch (Throwable e2) {
-                        e2.printStackTrace();
+                    catch (Throwable e) {
+                        e.printStackTrace();
                     }
                 });
             }
@@ -87,15 +87,15 @@ extends ListRegistry<Friend> {
                         properties.addProperty("friend-alias", friend.getAlias());
                         friends.add((JsonElement)properties);
                     }
-                    catch (Exception e2) {
-                        e2.printStackTrace();
+                    catch (Exception e) {
+                        e.printStackTrace();
                     }
                 });
                 try (FileWriter writer = new FileWriter(this.getFile());){
                     writer.write(new GsonBuilder().setPrettyPrinting().create().toJson((JsonElement)friends));
                 }
-                catch (Exception e2) {
-                    e2.printStackTrace();
+                catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         };

@@ -1,13 +1,15 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.api.minecraft.helper;
+package me.friendly.api.minecraft.helper;
 
-import com.gitlab.nuf.api.minecraft.helper.WorldHelper;
+import me.friendly.api.minecraft.helper.WorldHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockLiquid;
+import net.minecraft.block.BlockTallGrass;
 import net.minecraft.client.Minecraft;
+import net.minecraft.init.Blocks;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
@@ -25,28 +27,60 @@ public final class PlayerHelper {
     }
 
     public static boolean isInLiquid() {
-        return PlayerHelper.getBlockBelowPlayer(0.0) instanceof BlockLiquid;
+        if (PlayerHelper.minecraft.thePlayer == null) {
+            return false;
+        }
+        boolean inLiquid = false;
+        int y = (int)PlayerHelper.minecraft.thePlayer.getEntityBoundingBox().minY;
+        for (int x = MathHelper.floor_double(PlayerHelper.minecraft.thePlayer.getEntityBoundingBox().minX); x < MathHelper.floor_double(PlayerHelper.minecraft.thePlayer.getEntityBoundingBox().maxX) + 1; ++x) {
+            for (int z = MathHelper.floor_double(PlayerHelper.minecraft.thePlayer.getEntityBoundingBox().minZ); z < MathHelper.floor_double(PlayerHelper.minecraft.thePlayer.getEntityBoundingBox().maxZ) + 1; ++z) {
+                Block block = PlayerHelper.minecraft.theWorld.getBlockState(new BlockPos(x, y, z)).getBlock();
+                if (block == null || block instanceof BlockAir) continue;
+                if (!(block instanceof BlockLiquid)) {
+                    return false;
+                }
+                if (block instanceof BlockLiquid) {
+                    return true;
+                }
+                inLiquid = true;
+            }
+        }
+        return inLiquid;
+    }
+
+    public static boolean isInLiquid(double offset) {
+        return PlayerHelper.getBlockBelowPlayer(-offset) instanceof BlockLiquid;
     }
 
     public static boolean isOnLiquid() {
-        int y2 = (int)PlayerHelper.minecraft.thePlayer.getEntityBoundingBox().offset((double)0.0, (double)-0.01, (double)0.0).minY;
-        for (int x2 = MathHelper.floor_double(PlayerHelper.minecraft.thePlayer.getEntityBoundingBox().minX); x2 < MathHelper.floor_double(PlayerHelper.minecraft.thePlayer.getEntityBoundingBox().maxX) + 1; ++x2) {
-            for (int z2 = MathHelper.floor_double(PlayerHelper.minecraft.thePlayer.getEntityBoundingBox().minZ); z2 < MathHelper.floor_double(PlayerHelper.minecraft.thePlayer.getEntityBoundingBox().maxZ) + 1; ++z2) {
-                Block block = WorldHelper.getBlock(x2, y2, z2);
-                if (block == null || block instanceof BlockAir || !(block instanceof BlockLiquid)) continue;
-                return true;
+        AxisAlignedBB boundingBox = PlayerHelper.minecraft.thePlayer.getEntityBoundingBox();
+        boundingBox = boundingBox.contract(0.0, 0.0, 0.0).offset(0.0, -0.02, 0.0);
+        boolean onLiquid = false;
+        int y = (int)boundingBox.minY;
+        for (int x = MathHelper.floor_double(boundingBox.minX); x < MathHelper.floor_double(boundingBox.maxX + 1.0); ++x) {
+            for (int z = MathHelper.floor_double(boundingBox.minZ); z < MathHelper.floor_double(boundingBox.maxZ + 1.0); ++z) {
+                Block block = WorldHelper.getBlock(x, y, z);
+                if (block == Blocks.air) continue;
+                if (!(block instanceof BlockLiquid)) {
+                    return false;
+                }
+                onLiquid = true;
             }
         }
-        return false;
+        return onLiquid;
     }
 
     public static boolean isInsideBlock() {
-        for (int x2 = MathHelper.floor_double(PlayerHelper.minecraft.thePlayer.getEntityBoundingBox().minX); x2 < MathHelper.floor_double(PlayerHelper.minecraft.thePlayer.getEntityBoundingBox().maxX) + 1; ++x2) {
-            for (int y2 = MathHelper.floor_double(PlayerHelper.minecraft.thePlayer.getEntityBoundingBox().minY); y2 < MathHelper.floor_double(PlayerHelper.minecraft.thePlayer.getEntityBoundingBox().maxY) + 1; ++y2) {
-                for (int z2 = MathHelper.floor_double(PlayerHelper.minecraft.thePlayer.getEntityBoundingBox().minZ); z2 < MathHelper.floor_double(PlayerHelper.minecraft.thePlayer.getEntityBoundingBox().maxZ) + 1; ++z2) {
-                    AxisAlignedBB boundingBox;
-                    Block block = WorldHelper.getBlock(x2, y2, z2);
-                    if (block == null || block instanceof BlockAir || (boundingBox = block.getSelectedBoundingBox(Minecraft.getMinecraft().theWorld, new BlockPos(x2, y2, z2))) == null || !PlayerHelper.minecraft.thePlayer.getEntityBoundingBox().intersectsWith(boundingBox)) continue;
+        for (int x = MathHelper.floor_double(PlayerHelper.minecraft.thePlayer.getEntityBoundingBox().minX); x < MathHelper.floor_double(PlayerHelper.minecraft.thePlayer.getEntityBoundingBox().maxX) + 1; ++x) {
+            for (int y = MathHelper.floor_double(PlayerHelper.minecraft.thePlayer.getEntityBoundingBox().minY); y < MathHelper.floor_double(PlayerHelper.minecraft.thePlayer.getEntityBoundingBox().maxY) + 1; ++y) {
+                for (int z = MathHelper.floor_double(PlayerHelper.minecraft.thePlayer.getEntityBoundingBox().minZ); z < MathHelper.floor_double(PlayerHelper.minecraft.thePlayer.getEntityBoundingBox().maxZ) + 1; ++z) {
+                    Block block = WorldHelper.getBlock(x, y, z);
+                    if (block == null || block instanceof BlockAir) continue;
+                    if (block instanceof BlockTallGrass) {
+                        return false;
+                    }
+                    AxisAlignedBB boundingBox = block.getSelectedBoundingBox(Minecraft.getMinecraft().theWorld, new BlockPos(x, y, z));
+                    if (boundingBox == null || !PlayerHelper.minecraft.thePlayer.getEntityBoundingBox().intersectsWith(boundingBox)) continue;
                     return true;
                 }
             }
@@ -55,13 +89,25 @@ public final class PlayerHelper {
     }
 
     public static boolean isAiming(float yaw, float pitch, int fov) {
+        float pitchDiff;
+        yaw = PlayerHelper.wrapAngleTo180(yaw);
+        pitch = PlayerHelper.wrapAngleTo180(pitch);
+        float curYaw = PlayerHelper.wrapAngleTo180(PlayerHelper.minecraft.thePlayer.rotationYaw);
+        float curPitch = PlayerHelper.wrapAngleTo180(PlayerHelper.minecraft.thePlayer.rotationPitch);
+        float yawDiff = Math.abs(yaw - curYaw);
+        return yawDiff + (pitchDiff = Math.abs(pitch - curPitch)) <= (float)fov;
+    }
+
+    public static float getFOV(float[] rotations) {
+        float yaw = rotations[0];
+        float pitch = rotations[1];
         yaw = PlayerHelper.wrapAngleTo180(yaw);
         pitch = PlayerHelper.wrapAngleTo180(pitch);
         float curYaw = PlayerHelper.wrapAngleTo180(PlayerHelper.minecraft.thePlayer.rotationYaw);
         float curPitch = PlayerHelper.wrapAngleTo180(PlayerHelper.minecraft.thePlayer.rotationPitch);
         float yawDiff = Math.abs(yaw - curYaw);
         float pitchDiff = Math.abs(pitch - curPitch);
-        return yawDiff <= (float)fov && pitchDiff <= (float)fov;
+        return yawDiff + pitchDiff;
     }
 
     public static float wrapAngleTo180(float angle) {

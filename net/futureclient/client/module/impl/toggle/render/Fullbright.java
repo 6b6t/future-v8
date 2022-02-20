@@ -1,14 +1,14 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.render;
+package me.friendly.exeter.module.impl.toggle.render;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.exeter.events.GammaSettingEvent;
-import com.gitlab.nuf.exeter.events.NightVisionEvent;
-import com.gitlab.nuf.exeter.module.ModuleType;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
-import com.gitlab.nuf.exeter.properties.EnumProperty;
+import me.friendly.api.event.Listener;
+import me.friendly.exeter.events.GammaSettingEvent;
+import me.friendly.exeter.events.NightVisionEvent;
+import me.friendly.exeter.module.ModuleType;
+import me.friendly.exeter.module.ToggleableModule;
+import me.friendly.exeter.properties.EnumProperty;
 
 public final class Fullbright
 extends ToggleableModule {

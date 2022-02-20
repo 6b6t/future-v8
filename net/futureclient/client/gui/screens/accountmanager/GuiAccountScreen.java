@@ -1,16 +1,8 @@
-//Deobfuscated with https://github.com/SimplyProgrammer/Minecraft-Deobfuscator3000 using mappings "C:\Users\aesthetical\Documents\Minecraft\decomped\mappings\1.8.9"!
-
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.gui.screens.accountmanager;
+package me.friendly.exeter.gui.screens.accountmanager;
 
-import com.gitlab.nuf.exeter.core.Exeter;
-import com.gitlab.nuf.exeter.gui.screens.accountmanager.Account;
-import com.gitlab.nuf.exeter.gui.screens.accountmanager.AccountException;
-import com.gitlab.nuf.exeter.gui.screens.accountmanager.GuiAccountAdd;
-import com.gitlab.nuf.exeter.gui.screens.accountmanager.GuiAccountSlot;
-import com.gitlab.nuf.exeter.gui.screens.accountmanager.GuiDirectLogin;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
@@ -24,6 +16,12 @@ import java.util.Scanner;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import me.friendly.exeter.core.Exeter;
+import me.friendly.exeter.gui.screens.accountmanager.Account;
+import me.friendly.exeter.gui.screens.accountmanager.AccountException;
+import me.friendly.exeter.gui.screens.accountmanager.GuiAccountAdd;
+import me.friendly.exeter.gui.screens.accountmanager.GuiAccountSlot;
+import me.friendly.exeter.gui.screens.accountmanager.GuiDirectLogin;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
@@ -43,7 +41,7 @@ implements GuiYesNoCallback {
     @Override
     public void handleMouseInput() throws IOException {
         super.handleMouseInput();
-        this.accountSlot.handleMouseInput();
+        this.accountSlot.func_178039_p();
     }
 
     @Override
@@ -60,12 +58,12 @@ implements GuiYesNoCallback {
     }
 
     @Override
-    public void confirmClicked(boolean result, int id2) {
-        super.confirmClicked(result, id2);
+    public void confirmClicked(boolean result, int id) {
+        super.confirmClicked(result, id);
         if (this.deleteMenuOpen) {
             this.deleteMenuOpen = false;
             if (result) {
-                Exeter.getInstance().getAccountManager().getRegistry().remove(id2);
+                Exeter.getInstance().getAccountManager().getRegistry().remove(id);
             }
             this.mc.displayGuiScreen(this);
         }
@@ -96,8 +94,8 @@ implements GuiYesNoCallback {
             try {
                 super.actionPerformed(guiButton);
             }
-            catch (Exception e2) {
-                e2.printStackTrace();
+            catch (Exception e) {
+                e.printStackTrace();
             }
             if (guiButton.id == 1) {
                 GuiAccountAdd gaa = new GuiAccountAdd();
@@ -182,8 +180,8 @@ implements GuiYesNoCallback {
         chooser.addActionListener(new ActionListener(){
 
             @Override
-            public void actionPerformed(ActionEvent e2) {
-                if (e2.getActionCommand().equals("ApproveSelection") && chooser.getSelectedFile() != null) {
+            public void actionPerformed(ActionEvent e) {
+                if (e.getActionCommand().equals("ApproveSelection") && chooser.getSelectedFile() != null) {
                     try {
                         Scanner scanner = new Scanner(new FileReader(chooser.getSelectedFile()));
                         scanner.useDelimiter("\n");
@@ -198,8 +196,8 @@ implements GuiYesNoCallback {
                     }
                     try {
                         StringBuilder data = new StringBuilder();
-                        for (Account alt2 : Exeter.getInstance().getAccountManager().getRegistry()) {
-                            data.append(alt2.getFileLine() + "\n");
+                        for (Account alt : Exeter.getInstance().getAccountManager().getRegistry()) {
+                            data.append(alt.getFileLine() + "\n");
                         }
                         BufferedWriter writer = new BufferedWriter(new FileWriter(Exeter.getInstance().getDirectory() + "/accounts.txt"));
                         writer.write(data.toString());
@@ -211,7 +209,7 @@ implements GuiYesNoCallback {
                     frame.setVisible(false);
                     frame.dispose();
                 }
-                if (e2.getActionCommand().equals("CancelSelection")) {
+                if (e.getActionCommand().equals("CancelSelection")) {
                     frame.setVisible(false);
                     frame.dispose();
                 }

@@ -1,21 +1,21 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.module.impl.active.render;
+package me.friendly.exeter.module.impl.active.render;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.api.interfaces.Toggleable;
-import com.gitlab.nuf.api.minecraft.helper.PlayerHelper;
-import com.gitlab.nuf.exeter.core.Exeter;
-import com.gitlab.nuf.exeter.events.RenderGameOverlayEvent;
-import com.gitlab.nuf.exeter.module.Module;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
-import com.gitlab.nuf.exeter.properties.EnumProperty;
-import com.gitlab.nuf.exeter.properties.Property;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import me.friendly.api.event.Listener;
+import me.friendly.api.interfaces.Toggleable;
+import me.friendly.api.minecraft.helper.PlayerHelper;
+import me.friendly.exeter.core.Exeter;
+import me.friendly.exeter.events.RenderGameOverlayEvent;
+import me.friendly.exeter.module.Module;
+import me.friendly.exeter.module.ToggleableModule;
+import me.friendly.exeter.properties.EnumProperty;
+import me.friendly.exeter.properties.Property;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.ScaledResolution;
@@ -54,7 +54,7 @@ extends Module {
                 if (((Boolean)TextGUI.this.watermark.getValue()).booleanValue()) {
                     GlStateManager.pushMatrix();
                     GlStateManager.enableBlend();
-                    ((TextGUI)TextGUI.this).minecraft.fontRenderer.drawStringWithShadow(String.format("%s \u00a77b%s", "Exeter", 13), 2.0f, 2.0f, (Boolean)TextGUI.this.transparent.getValue() != false ? -1711276033 : -1);
+                    ((TextGUI)TextGUI.this).minecraft.fontRenderer.drawStringWithShadow(String.format("%s \u00a77b%s", "Exeter", 23), 2.0f, 2.0f, (Boolean)TextGUI.this.transparent.getValue() != false ? -1711276033 : -1);
                     GlStateManager.disableBlend();
                     GlStateManager.popMatrix();
                 }
@@ -79,21 +79,21 @@ extends Module {
                     }
                 }
                 if (((Boolean)TextGUI.this.armor.getValue()).booleanValue()) {
-                    int x2 = 15;
+                    int x = 15;
                     GlStateManager.pushMatrix();
                     RenderHelper.enableGUIStandardItemLighting();
                     for (int index = 3; index >= 0; --index) {
                         ItemStack stack = ((TextGUI)TextGUI.this).minecraft.thePlayer.inventory.armorInventory[index];
                         if (stack == null) continue;
-                        int y2 = ((TextGUI)TextGUI.this).minecraft.thePlayer.isInsideOfMaterial(Material.water) && !((TextGUI)TextGUI.this).minecraft.thePlayer.capabilities.isCreativeMode ? 65 : (((TextGUI)TextGUI.this).minecraft.thePlayer.capabilities.isCreativeMode ? 38 : 55);
-                        TextGUI.this.minecraft.getRenderItem().renderItemAndEffectIntoGUI(stack, scaledResolution.getScaledWidth() / 2 + x2, scaledResolution.getScaledHeight() - y2);
-                        TextGUI.this.minecraft.getRenderItem().renderItemOverlays(((TextGUI)TextGUI.this).minecraft.fontRenderer, stack, scaledResolution.getScaledWidth() / 2 + x2, scaledResolution.getScaledHeight() - y2);
-                        x2 += 18;
+                        int y = ((TextGUI)TextGUI.this).minecraft.thePlayer.isInsideOfMaterial(Material.water) && !((TextGUI)TextGUI.this).minecraft.thePlayer.capabilities.isCreativeMode ? 65 : (((TextGUI)TextGUI.this).minecraft.thePlayer.capabilities.isCreativeMode ? 38 : 55);
+                        TextGUI.this.minecraft.getRenderItem().renderItemAndEffectIntoGUI(stack, scaledResolution.getScaledWidth() / 2 + x, scaledResolution.getScaledHeight() - y);
+                        TextGUI.this.minecraft.getRenderItem().renderItemOverlays(((TextGUI)TextGUI.this).minecraft.fontRenderer, stack, scaledResolution.getScaledWidth() / 2 + x, scaledResolution.getScaledHeight() - y);
+                        x += 18;
                     }
                     RenderHelper.disableStandardItemLighting();
                     GlStateManager.popMatrix();
                 }
-                int y3 = scaledResolution.getScaledHeight() - (((TextGUI)TextGUI.this).minecraft.currentScreen instanceof GuiChat ? 24 : 10);
+                int y = scaledResolution.getScaledHeight() - (((TextGUI)TextGUI.this).minecraft.currentScreen instanceof GuiChat ? 24 : 10);
                 if (((Boolean)TextGUI.this.potions.getValue()).booleanValue() && (effects = ((TextGUI)TextGUI.this).minecraft.thePlayer.getActivePotionEffects()) != null && !effects.isEmpty()) {
                     for (PotionEffect effect : effects) {
                         Potion potion;
@@ -101,22 +101,22 @@ extends Module {
                         String name = StatCollector.translateToLocal(potion.getName());
                         name = name + String.format(" \u00a77%s : %s", effect.getAmplifier() + 1, Potion.getDurationString(effect));
                         int align = scaledResolution.getScaledWidth() - ((TextGUI)TextGUI.this).minecraft.fontRenderer.getStringWidth(name) - 2;
-                        ((TextGUI)TextGUI.this).minecraft.fontRenderer.drawStringWithShadow(name, align, y3, potion.getLiquidColor());
-                        y3 -= 9;
+                        ((TextGUI)TextGUI.this).minecraft.fontRenderer.drawStringWithShadow(name, align, y, potion.getLiquidColor());
+                        y -= 9;
                     }
                 }
-                y3 += 9;
+                y += 9;
                 if (((Boolean)TextGUI.this.coords.getValue()).booleanValue()) {
                     String coordinatesFormat = String.format("\u00a7f%s, %s, %s \u00a77XYZ", (int)((TextGUI)TextGUI.this).minecraft.thePlayer.posX, (int)((TextGUI)TextGUI.this).minecraft.thePlayer.posY, (int)((TextGUI)TextGUI.this).minecraft.thePlayer.posZ);
-                    ((TextGUI)TextGUI.this).minecraft.fontRenderer.drawStringWithShadow(coordinatesFormat, scaledResolution.getScaledWidth() - ((TextGUI)TextGUI.this).minecraft.fontRenderer.getStringWidth(coordinatesFormat) - 2, y3 -= 9, -1);
+                    ((TextGUI)TextGUI.this).minecraft.fontRenderer.drawStringWithShadow(coordinatesFormat, scaledResolution.getScaledWidth() - ((TextGUI)TextGUI.this).minecraft.fontRenderer.getStringWidth(coordinatesFormat) - 2, y -= 9, -1);
                 }
                 if (((Boolean)TextGUI.this.time.getValue()).booleanValue()) {
                     String time = String.format("\u00a77%s", TextGUI.this.dateFormat.format(new Date()));
-                    ((TextGUI)TextGUI.this).minecraft.fontRenderer.drawStringWithShadow(time, scaledResolution.getScaledWidth() - ((TextGUI)TextGUI.this).minecraft.fontRenderer.getStringWidth(time) - 2, y3 -= 9, -1);
+                    ((TextGUI)TextGUI.this).minecraft.fontRenderer.drawStringWithShadow(time, scaledResolution.getScaledWidth() - ((TextGUI)TextGUI.this).minecraft.fontRenderer.getStringWidth(time) - 2, y -= 9, -1);
                 }
                 if (((Boolean)TextGUI.this.direction.getValue()).booleanValue()) {
                     String direction = String.format("\u00a77%s", PlayerHelper.getFacingWithProperCapitals().toUpperCase());
-                    ((TextGUI)TextGUI.this).minecraft.fontRenderer.drawStringWithShadow(direction, scaledResolution.getScaledWidth() - ((TextGUI)TextGUI.this).minecraft.fontRenderer.getStringWidth(direction) - 2, y3 -= 9, -1);
+                    ((TextGUI)TextGUI.this).minecraft.fontRenderer.drawStringWithShadow(direction, scaledResolution.getScaledWidth() - ((TextGUI)TextGUI.this).minecraft.fontRenderer.getStringWidth(direction) - 2, y -= 9, -1);
                 }
             }
         });

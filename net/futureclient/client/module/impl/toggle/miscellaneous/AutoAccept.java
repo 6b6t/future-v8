@@ -1,15 +1,15 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.miscellaneous;
+package me.friendly.exeter.module.impl.toggle.miscellaneous;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.api.stopwatch.Stopwatch;
-import com.gitlab.nuf.exeter.core.Exeter;
-import com.gitlab.nuf.exeter.events.PacketEvent;
-import com.gitlab.nuf.exeter.module.ModuleType;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
-import com.gitlab.nuf.exeter.properties.Property;
+import me.friendly.api.event.Listener;
+import me.friendly.api.stopwatch.Stopwatch;
+import me.friendly.exeter.core.Exeter;
+import me.friendly.exeter.events.PacketEvent;
+import me.friendly.exeter.module.ModuleType;
+import me.friendly.exeter.module.ToggleableModule;
+import me.friendly.exeter.properties.Property;
 import net.minecraft.network.play.server.S02PacketChat;
 
 public final class AutoAccept
@@ -18,7 +18,7 @@ extends ToggleableModule {
     private final Stopwatch stopwatch = new Stopwatch();
 
     public AutoAccept() {
-        super("Auto Accept", new String[]{"autoaccept", "aa", "tpaccept"}, ModuleType.MISCELLANEOUS);
+        super("AutoAccept", new String[]{"autoaccept", "aa", "tpaccept"}, ModuleType.MISCELLANEOUS);
         this.offerProperties(this.factions);
         this.listeners.add(new Listener<PacketEvent>("auto_accept_packet_listener"){
 

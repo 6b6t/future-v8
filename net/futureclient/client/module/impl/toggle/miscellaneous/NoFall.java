@@ -1,15 +1,15 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.miscellaneous;
+package me.friendly.exeter.module.impl.toggle.miscellaneous;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.api.minecraft.helper.PlayerHelper;
-import com.gitlab.nuf.exeter.events.MotionUpdateEvent;
-import com.gitlab.nuf.exeter.events.PacketEvent;
-import com.gitlab.nuf.exeter.module.ModuleType;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
-import com.gitlab.nuf.exeter.properties.EnumProperty;
+import me.friendly.api.event.Listener;
+import me.friendly.api.minecraft.helper.PlayerHelper;
+import me.friendly.exeter.events.MotionUpdateEvent;
+import me.friendly.exeter.events.PacketEvent;
+import me.friendly.exeter.module.ModuleType;
+import me.friendly.exeter.module.ToggleableModule;
+import me.friendly.exeter.properties.EnumProperty;
 import net.minecraft.block.BlockAir;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerData;
@@ -20,7 +20,7 @@ extends ToggleableModule {
     private final EnumProperty<Mode> mode = new EnumProperty<Mode>(Mode.DAMAGE, "Mode", "m");
 
     public NoFall() {
-        super("No Fall", new String[]{"nofall", "0fall", "nf"}, -12727218, ModuleType.MISCELLANEOUS);
+        super("NoFall", new String[]{"nofall", "0fall", "nf"}, -12727218, ModuleType.MISCELLANEOUS);
         this.offerProperties(this.mode);
         this.listeners.add(new Listener<PacketEvent>("no_fall_packet_listener"){
 
@@ -40,16 +40,16 @@ extends ToggleableModule {
             public void call(MotionUpdateEvent event) {
                 switch ((Mode)((Object)NoFall.this.mode.getValue())) {
                     case INFINITE: {
-                        NoFall.this.setTag("Infinite Jump");
+                        NoFall.this.setTag("InfiniteJump");
                         ((NoFall)NoFall.this).minecraft.thePlayer.onGround = true;
                         break;
                     }
                     case DAMAGE: {
-                        NoFall.this.setTag("No Fall");
+                        NoFall.this.setTag("NoFall");
                         break;
                     }
                     case RECONNECT: {
-                        NoFall.this.setTag("Reconnect Fall");
+                        NoFall.this.setTag("ReconnectFall");
                         if (PlayerHelper.getBlockBelowPlayer(4.0) instanceof BlockAir) break;
                         ServerData serverData = NoFall.this.minecraft.getCurrentServerData();
                         ((NoFall)NoFall.this).minecraft.theWorld.sendQuittingDisconnectingPacket();
@@ -58,7 +58,7 @@ extends ToggleableModule {
                         break;
                     }
                     case DISCONNECT: {
-                        NoFall.this.setTag("Disconnect Fall");
+                        NoFall.this.setTag("DisconnectFall");
                         if (PlayerHelper.getBlockBelowPlayer(4.0) instanceof BlockAir) break;
                         ((NoFall)NoFall.this).minecraft.theWorld.sendQuittingDisconnectingPacket();
                         NoFall.this.setRunning(false);

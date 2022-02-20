@@ -8,73 +8,8 @@
  *  com.google.gson.JsonObject
  *  com.google.gson.JsonParser
  */
-package com.gitlab.nuf.exeter.module;
+package me.friendly.exeter.module;
 
-import com.gitlab.nuf.api.interfaces.Toggleable;
-import com.gitlab.nuf.api.registry.ListRegistry;
-import com.gitlab.nuf.exeter.config.Config;
-import com.gitlab.nuf.exeter.core.Exeter;
-import com.gitlab.nuf.exeter.module.Module;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
-import com.gitlab.nuf.exeter.module.impl.active.combat.AntiAim;
-import com.gitlab.nuf.exeter.module.impl.active.render.Render;
-import com.gitlab.nuf.exeter.module.impl.active.render.TextGUI;
-import com.gitlab.nuf.exeter.module.impl.toggle.combat.AutoArmor;
-import com.gitlab.nuf.exeter.module.impl.toggle.combat.AutoClicker;
-import com.gitlab.nuf.exeter.module.impl.toggle.combat.AutoHeal;
-import com.gitlab.nuf.exeter.module.impl.toggle.combat.BowAimbot;
-import com.gitlab.nuf.exeter.module.impl.toggle.combat.ClickAimbot;
-import com.gitlab.nuf.exeter.module.impl.toggle.combat.Criticals;
-import com.gitlab.nuf.exeter.module.impl.toggle.combat.KillAura;
-import com.gitlab.nuf.exeter.module.impl.toggle.combat.QuakeAimbot;
-import com.gitlab.nuf.exeter.module.impl.toggle.exploits.FastUse;
-import com.gitlab.nuf.exeter.module.impl.toggle.exploits.InfiniteDurability;
-import com.gitlab.nuf.exeter.module.impl.toggle.exploits.ItemSpoof;
-import com.gitlab.nuf.exeter.module.impl.toggle.exploits.NoHunger;
-import com.gitlab.nuf.exeter.module.impl.toggle.exploits.QuickAttack;
-import com.gitlab.nuf.exeter.module.impl.toggle.exploits.Regen;
-import com.gitlab.nuf.exeter.module.impl.toggle.exploits.Zoot;
-import com.gitlab.nuf.exeter.module.impl.toggle.miscellaneous.AntiCommand;
-import com.gitlab.nuf.exeter.module.impl.toggle.miscellaneous.AutoAccept;
-import com.gitlab.nuf.exeter.module.impl.toggle.miscellaneous.Chest;
-import com.gitlab.nuf.exeter.module.impl.toggle.miscellaneous.Freecam;
-import com.gitlab.nuf.exeter.module.impl.toggle.miscellaneous.InventoryWalk;
-import com.gitlab.nuf.exeter.module.impl.toggle.miscellaneous.MiddleClickFriends;
-import com.gitlab.nuf.exeter.module.impl.toggle.miscellaneous.NoFall;
-import com.gitlab.nuf.exeter.module.impl.toggle.miscellaneous.PotionSaver;
-import com.gitlab.nuf.exeter.module.impl.toggle.miscellaneous.SkinFlash;
-import com.gitlab.nuf.exeter.module.impl.toggle.miscellaneous.Sneak;
-import com.gitlab.nuf.exeter.module.impl.toggle.miscellaneous.SpamBypass;
-import com.gitlab.nuf.exeter.module.impl.toggle.miscellaneous.XCarry;
-import com.gitlab.nuf.exeter.module.impl.toggle.movement.AntiVelocity;
-import com.gitlab.nuf.exeter.module.impl.toggle.movement.Blink;
-import com.gitlab.nuf.exeter.module.impl.toggle.movement.FastLadder;
-import com.gitlab.nuf.exeter.module.impl.toggle.movement.Flight;
-import com.gitlab.nuf.exeter.module.impl.toggle.movement.Glide;
-import com.gitlab.nuf.exeter.module.impl.toggle.movement.Jesus;
-import com.gitlab.nuf.exeter.module.impl.toggle.movement.NoSlow;
-import com.gitlab.nuf.exeter.module.impl.toggle.movement.Speed;
-import com.gitlab.nuf.exeter.module.impl.toggle.movement.Sprint;
-import com.gitlab.nuf.exeter.module.impl.toggle.movement.Step;
-import com.gitlab.nuf.exeter.module.impl.toggle.render.ClickGui;
-import com.gitlab.nuf.exeter.module.impl.toggle.render.Fullbright;
-import com.gitlab.nuf.exeter.module.impl.toggle.render.NameProtect;
-import com.gitlab.nuf.exeter.module.impl.toggle.render.NameTags;
-import com.gitlab.nuf.exeter.module.impl.toggle.render.Search;
-import com.gitlab.nuf.exeter.module.impl.toggle.render.Seeker;
-import com.gitlab.nuf.exeter.module.impl.toggle.render.StorageESP;
-import com.gitlab.nuf.exeter.module.impl.toggle.render.TabGui;
-import com.gitlab.nuf.exeter.module.impl.toggle.render.Tracers;
-import com.gitlab.nuf.exeter.module.impl.toggle.render.Trails;
-import com.gitlab.nuf.exeter.module.impl.toggle.render.Wallhack;
-import com.gitlab.nuf.exeter.module.impl.toggle.render.Waypoints;
-import com.gitlab.nuf.exeter.module.impl.toggle.render.WorldeditESP;
-import com.gitlab.nuf.exeter.module.impl.toggle.world.AutoFarm;
-import com.gitlab.nuf.exeter.module.impl.toggle.world.Avoid;
-import com.gitlab.nuf.exeter.module.impl.toggle.world.FastPlace;
-import com.gitlab.nuf.exeter.module.impl.toggle.world.Phase;
-import com.gitlab.nuf.exeter.module.impl.toggle.world.SafeWalk;
-import com.gitlab.nuf.exeter.module.impl.toggle.world.Speedmine;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -86,6 +21,73 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
+import me.friendly.api.interfaces.Toggleable;
+import me.friendly.api.registry.ListRegistry;
+import me.friendly.exeter.config.Config;
+import me.friendly.exeter.core.Exeter;
+import me.friendly.exeter.module.Module;
+import me.friendly.exeter.module.ToggleableModule;
+import me.friendly.exeter.module.impl.active.combat.AntiAim;
+import me.friendly.exeter.module.impl.active.render.Render;
+import me.friendly.exeter.module.impl.active.render.TextGUI;
+import me.friendly.exeter.module.impl.toggle.combat.AutoArmor;
+import me.friendly.exeter.module.impl.toggle.combat.AutoClicker;
+import me.friendly.exeter.module.impl.toggle.combat.AutoHeal;
+import me.friendly.exeter.module.impl.toggle.combat.BowAimbot;
+import me.friendly.exeter.module.impl.toggle.combat.ClickAimbot;
+import me.friendly.exeter.module.impl.toggle.combat.Criticals;
+import me.friendly.exeter.module.impl.toggle.combat.KillAura;
+import me.friendly.exeter.module.impl.toggle.combat.QuakeAimbot;
+import me.friendly.exeter.module.impl.toggle.exploits.CivBreak;
+import me.friendly.exeter.module.impl.toggle.exploits.FastUse;
+import me.friendly.exeter.module.impl.toggle.exploits.InfiniteDurability;
+import me.friendly.exeter.module.impl.toggle.exploits.ItemSpoof;
+import me.friendly.exeter.module.impl.toggle.exploits.NoHunger;
+import me.friendly.exeter.module.impl.toggle.exploits.QuickAttack;
+import me.friendly.exeter.module.impl.toggle.exploits.Regen;
+import me.friendly.exeter.module.impl.toggle.exploits.Zoot;
+import me.friendly.exeter.module.impl.toggle.miscellaneous.AntiCommand;
+import me.friendly.exeter.module.impl.toggle.miscellaneous.AutoAccept;
+import me.friendly.exeter.module.impl.toggle.miscellaneous.Chest;
+import me.friendly.exeter.module.impl.toggle.miscellaneous.Freecam;
+import me.friendly.exeter.module.impl.toggle.miscellaneous.InventoryWalk;
+import me.friendly.exeter.module.impl.toggle.miscellaneous.MiddleClickFriends;
+import me.friendly.exeter.module.impl.toggle.miscellaneous.NoFall;
+import me.friendly.exeter.module.impl.toggle.miscellaneous.PotionSaver;
+import me.friendly.exeter.module.impl.toggle.miscellaneous.SkinFlash;
+import me.friendly.exeter.module.impl.toggle.miscellaneous.Sneak;
+import me.friendly.exeter.module.impl.toggle.miscellaneous.SpamBypass;
+import me.friendly.exeter.module.impl.toggle.miscellaneous.XCarry;
+import me.friendly.exeter.module.impl.toggle.movement.AntiVelocity;
+import me.friendly.exeter.module.impl.toggle.movement.Blink;
+import me.friendly.exeter.module.impl.toggle.movement.FastLadder;
+import me.friendly.exeter.module.impl.toggle.movement.Flight;
+import me.friendly.exeter.module.impl.toggle.movement.Glide;
+import me.friendly.exeter.module.impl.toggle.movement.Jesus;
+import me.friendly.exeter.module.impl.toggle.movement.LongJump;
+import me.friendly.exeter.module.impl.toggle.movement.NoSlow;
+import me.friendly.exeter.module.impl.toggle.movement.Speed;
+import me.friendly.exeter.module.impl.toggle.movement.Sprint;
+import me.friendly.exeter.module.impl.toggle.movement.Step;
+import me.friendly.exeter.module.impl.toggle.render.ClickGui;
+import me.friendly.exeter.module.impl.toggle.render.Fullbright;
+import me.friendly.exeter.module.impl.toggle.render.NameProtect;
+import me.friendly.exeter.module.impl.toggle.render.NameTags;
+import me.friendly.exeter.module.impl.toggle.render.Search;
+import me.friendly.exeter.module.impl.toggle.render.Seeker;
+import me.friendly.exeter.module.impl.toggle.render.StorageESP;
+import me.friendly.exeter.module.impl.toggle.render.TabGui;
+import me.friendly.exeter.module.impl.toggle.render.Tracers;
+import me.friendly.exeter.module.impl.toggle.render.Trails;
+import me.friendly.exeter.module.impl.toggle.render.Wallhack;
+import me.friendly.exeter.module.impl.toggle.render.Waypoints;
+import me.friendly.exeter.module.impl.toggle.render.WorldeditESP;
+import me.friendly.exeter.module.impl.toggle.world.AutoFarm;
+import me.friendly.exeter.module.impl.toggle.world.Avoid;
+import me.friendly.exeter.module.impl.toggle.world.FastPlace;
+import me.friendly.exeter.module.impl.toggle.world.Phase;
+import me.friendly.exeter.module.impl.toggle.world.SafeWalk;
+import me.friendly.exeter.module.impl.toggle.world.Speedmine;
 
 public final class ModuleManager
 extends ListRegistry<Module> {
@@ -99,6 +101,7 @@ extends ListRegistry<Module> {
         this.register(new NoFall());
         this.register(new PotionSaver());
         this.register(new ClickAimbot());
+        this.register(new LongJump());
         this.register(new Glide());
         this.register(new Flight());
         this.register(new Zoot());
@@ -150,6 +153,7 @@ extends ListRegistry<Module> {
         this.register(new AutoFarm());
         this.register(new ItemSpoof());
         this.register(new QuakeAimbot());
+        this.register(new CivBreak());
         this.registry.sort((mod1, mod2) -> mod1.getLabel().compareTo(mod2.getLabel()));
         Exeter.getInstance().getKeybindManager().getKeybindByLabel("Click Gui").setKey(54);
         new Config("module_configurations.json"){
@@ -180,8 +184,8 @@ extends ListRegistry<Module> {
                         }
                         mod.loadConfig(node.getAsJsonObject());
                     }
-                    catch (IOException e2) {
-                        e2.printStackTrace();
+                    catch (IOException e) {
+                        e.printStackTrace();
                     }
                 });
                 this.loadConfig();
@@ -194,8 +198,8 @@ extends ListRegistry<Module> {
                         this.getFile().createNewFile();
                     }
                 }
-                catch (IOException e2) {
-                    e2.printStackTrace();
+                catch (IOException e) {
+                    e.printStackTrace();
                 }
                 if (!this.getFile().exists()) {
                     return;
@@ -213,8 +217,8 @@ extends ListRegistry<Module> {
                 try (FileReader reader = new FileReader(modsFile);){
                     root = new JsonParser().parse((Reader)reader);
                 }
-                catch (IOException e2) {
-                    e2.printStackTrace();
+                catch (IOException e) {
+                    e.printStackTrace();
                     return;
                 }
                 if (!(root instanceof JsonArray)) {
@@ -238,8 +242,8 @@ extends ListRegistry<Module> {
                             }
                         });
                     }
-                    catch (Throwable e2) {
-                        e2.printStackTrace();
+                    catch (Throwable e) {
+                        e.printStackTrace();
                     }
                 });
             }
@@ -265,15 +269,15 @@ extends ListRegistry<Module> {
                         }
                         mods.add((JsonElement)modObject);
                     }
-                    catch (Exception e2) {
-                        e2.printStackTrace();
+                    catch (Exception e) {
+                        e.printStackTrace();
                     }
                 });
                 try (FileWriter writer = new FileWriter(modsFile);){
                     writer.write(new GsonBuilder().setPrettyPrinting().create().toJson((JsonElement)mods));
                 }
-                catch (Exception e2) {
-                    e2.printStackTrace();
+                catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         };

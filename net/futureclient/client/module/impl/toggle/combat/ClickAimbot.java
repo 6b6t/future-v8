@@ -1,19 +1,19 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.combat;
+package me.friendly.exeter.module.impl.toggle.combat;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.api.minecraft.helper.EntityHelper;
-import com.gitlab.nuf.api.minecraft.helper.PlayerHelper;
-import com.gitlab.nuf.exeter.core.Exeter;
-import com.gitlab.nuf.exeter.events.InputEvent;
-import com.gitlab.nuf.exeter.events.MotionUpdateEvent;
-import com.gitlab.nuf.exeter.module.ModuleType;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
-import com.gitlab.nuf.exeter.properties.EnumProperty;
-import com.gitlab.nuf.exeter.properties.NumberProperty;
-import com.gitlab.nuf.exeter.properties.Property;
+import me.friendly.api.event.Listener;
+import me.friendly.api.minecraft.helper.EntityHelper;
+import me.friendly.api.minecraft.helper.PlayerHelper;
+import me.friendly.exeter.core.Exeter;
+import me.friendly.exeter.events.InputEvent;
+import me.friendly.exeter.events.MotionUpdateEvent;
+import me.friendly.exeter.module.ModuleType;
+import me.friendly.exeter.module.ToggleableModule;
+import me.friendly.exeter.properties.EnumProperty;
+import me.friendly.exeter.properties.NumberProperty;
+import me.friendly.exeter.properties.Property;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;
@@ -23,7 +23,7 @@ import net.minecraft.entity.player.EntityPlayer;
 public final class ClickAimbot
 extends ToggleableModule {
     private final NumberProperty<Float> reach = new NumberProperty<Float>(Float.valueOf(3.9f), Float.valueOf(3.0f), Float.valueOf(5.0f), "Reach", "range", "r");
-    private final NumberProperty<Integer> fov = new NumberProperty<Integer>(Integer.valueOf(60), 30, 180, "Fov", "view");
+    private final NumberProperty<Integer> fov = new NumberProperty<Integer>(Integer.valueOf(60), 30, 360, "Fov", "view");
     private final EnumProperty<InputEvent.Type> button = new EnumProperty<InputEvent.Type>(InputEvent.Type.MOUSE_LEFT_CLICK, "Button", "b");
     private final Property<Boolean> rayTrace = new Property<Boolean>(false, "Ray-Trace", "raytrace", "rt", "trace", "ray");
     private final Property<Boolean> players = new Property<Boolean>(true, "Players", "player", "p", "play");
@@ -34,7 +34,7 @@ extends ToggleableModule {
     private Entity target = null;
 
     public ClickAimbot() {
-        super("Click Aimbot", new String[]{"clickaimbot", "ca", "clickaim"}, -688231, ModuleType.COMBAT);
+        super("ClickAimbot", new String[]{"clickaimbot", "ca", "clickaim"}, -688231, ModuleType.COMBAT);
         this.offerProperties(this.reach, this.rayTrace, this.fov, this.button, this.players, this.monsters, this.animals, this.invisibles);
         this.listeners.add(new Listener<InputEvent>("click_aimbot_input_listener"){
 

@@ -1,9 +1,9 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.properties;
+package me.friendly.exeter.properties;
 
-import com.gitlab.nuf.exeter.properties.Property;
+import me.friendly.exeter.properties.Property;
 
 public class NumberProperty<T extends Number>
 extends Property<T> {

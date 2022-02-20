@@ -1,7 +1,7 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.api.registry;
+package me.friendly.api.registry;
 
 import java.util.List;
 

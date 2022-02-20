@@ -1,10 +1,10 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.gui.screens.accountmanager;
+package me.friendly.exeter.gui.screens.accountmanager;
 
-import com.gitlab.nuf.api.interfaces.Labeled;
-import com.gitlab.nuf.exeter.gui.screens.accountmanager.AccountException;
+import me.friendly.api.interfaces.Labeled;
+import me.friendly.exeter.gui.screens.accountmanager.AccountException;
 
 public class Account
 implements Labeled {

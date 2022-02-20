@@ -4,18 +4,18 @@
  * Could not load the following classes:
  *  com.mojang.authlib.GameProfile
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.miscellaneous;
+package me.friendly.exeter.module.impl.toggle.miscellaneous;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.exeter.events.MotionUpdateEvent;
-import com.gitlab.nuf.exeter.events.MovePlayerEvent;
-import com.gitlab.nuf.exeter.events.PacketEvent;
-import com.gitlab.nuf.exeter.events.RenderHandEvent;
-import com.gitlab.nuf.exeter.module.ModuleType;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
-import com.gitlab.nuf.exeter.properties.NumberProperty;
 import com.mojang.authlib.GameProfile;
 import java.util.List;
+import me.friendly.api.event.Listener;
+import me.friendly.exeter.events.MotionUpdateEvent;
+import me.friendly.exeter.events.MovePlayerEvent;
+import me.friendly.exeter.events.PacketEvent;
+import me.friendly.exeter.events.RenderHandEvent;
+import me.friendly.exeter.module.ModuleType;
+import me.friendly.exeter.module.ToggleableModule;
+import me.friendly.exeter.properties.NumberProperty;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.network.play.client.C03PacketPlayer;
 
@@ -36,7 +36,7 @@ extends ToggleableModule {
             @Override
             public void call(MotionUpdateEvent event) {
                 List boxes = ((Freecam)Freecam.this).minecraft.theWorld.getCollidingBoundingBoxes(((Freecam)Freecam.this).minecraft.thePlayer, ((Freecam)Freecam.this).minecraft.thePlayer.getEntityBoundingBox().expand(0.5, 0.5, 0.5));
-                boolean bl2 = ((Freecam)Freecam.this).minecraft.thePlayer.noClip = !boxes.isEmpty();
+                boolean bl = ((Freecam)Freecam.this).minecraft.thePlayer.noClip = !boxes.isEmpty();
                 if (!((Freecam)Freecam.this).minecraft.thePlayer.capabilities.isFlying) {
                     ((Freecam)Freecam.this).minecraft.thePlayer.capabilities.isFlying = true;
                 }

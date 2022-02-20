@@ -4,9 +4,9 @@
  * Could not load the following classes:
  *  org.lwjgl.input.Keyboard
  */
-package com.gitlab.nuf.exeter.events;
+package me.friendly.exeter.events;
 
-import com.gitlab.nuf.api.event.Event;
+import me.friendly.api.event.Event;
 import org.lwjgl.input.Keyboard;
 
 public class InputEvent

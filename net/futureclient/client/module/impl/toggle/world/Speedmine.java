@@ -1,19 +1,19 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.world;
+package me.friendly.exeter.module.impl.toggle.world;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.api.minecraft.helper.PlayerHelper;
-import com.gitlab.nuf.api.minecraft.helper.WorldHelper;
-import com.gitlab.nuf.exeter.core.Exeter;
-import com.gitlab.nuf.exeter.events.BlockClickedEvent;
-import com.gitlab.nuf.exeter.events.MiningSpeedEvent;
-import com.gitlab.nuf.exeter.module.ModuleType;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
-import com.gitlab.nuf.exeter.module.impl.toggle.combat.KillAura;
-import com.gitlab.nuf.exeter.properties.NumberProperty;
-import com.gitlab.nuf.exeter.properties.Property;
+import me.friendly.api.event.Listener;
+import me.friendly.api.minecraft.helper.PlayerHelper;
+import me.friendly.api.minecraft.helper.WorldHelper;
+import me.friendly.exeter.core.Exeter;
+import me.friendly.exeter.events.BlockClickedEvent;
+import me.friendly.exeter.events.MiningSpeedEvent;
+import me.friendly.exeter.module.ModuleType;
+import me.friendly.exeter.module.ToggleableModule;
+import me.friendly.exeter.module.impl.toggle.combat.KillAura;
+import me.friendly.exeter.properties.NumberProperty;
+import me.friendly.exeter.properties.Property;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -22,12 +22,13 @@ import net.minecraft.item.ItemStack;
 public final class Speedmine
 extends ToggleableModule {
     private final NumberProperty<Float> speed = new NumberProperty<Float>(Float.valueOf(1.1f), Float.valueOf(0.1f), Float.valueOf(10.0f), "Speed", "s");
+    private final NumberProperty<Integer> delay = new NumberProperty<Integer>(Integer.valueOf(1), 0, 50, "Delay", "d");
     private final Property<Boolean> fastfall = new Property<Boolean>(true, "Fastfall", "ff");
     private final Property<Boolean> autoTool = new Property<Boolean>(true, "AutoTool", "at", "tool");
 
     public Speedmine() {
         super("Speedmine", new String[]{"speedmine", "speedygonzales", "sg", "sm", "fastbreak"}, -3373970, ModuleType.WORLD);
-        this.offerProperties(this.speed, this.fastfall, this.autoTool);
+        this.offerProperties(this.speed, this.fastfall, this.autoTool, this.delay);
         this.listeners.add(new Listener<MiningSpeedEvent>("speedy_gonzales_mining_speed_listener"){
 
             @Override
@@ -83,6 +84,18 @@ extends ToggleableModule {
             maxStrSlot = index;
         }
         return maxStrSlot;
+    }
+
+    @Override
+    protected void onEnable() {
+        super.onEnable();
+        this.minecraft.playerController.blockHitDelay = (Integer)this.delay.getValue();
+    }
+
+    @Override
+    protected void onDisable() {
+        super.onDisable();
+        this.minecraft.playerController.blockHitDelay = 5;
     }
 }
 

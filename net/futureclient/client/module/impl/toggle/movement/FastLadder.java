@@ -1,14 +1,14 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.movement;
+package me.friendly.exeter.module.impl.toggle.movement;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.exeter.events.MovePlayerEvent;
-import com.gitlab.nuf.exeter.module.ModuleType;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
-import com.gitlab.nuf.exeter.properties.NumberProperty;
-import com.gitlab.nuf.exeter.properties.Property;
+import me.friendly.api.event.Listener;
+import me.friendly.exeter.events.MovePlayerEvent;
+import me.friendly.exeter.module.ModuleType;
+import me.friendly.exeter.module.ToggleableModule;
+import me.friendly.exeter.properties.NumberProperty;
+import me.friendly.exeter.properties.Property;
 
 public final class FastLadder
 extends ToggleableModule {
@@ -16,7 +16,7 @@ extends ToggleableModule {
     private final Property<Boolean> stop = new Property<Boolean>(true, "Stop", "s");
 
     public FastLadder() {
-        super("Fast Ladder", new String[]{"fastladder", "ladder", "ladders", "fl"}, -3037363, ModuleType.MOVEMENT);
+        super("FastLadder", new String[]{"fastladder", "ladder", "ladders", "fl"}, -3037363, ModuleType.MOVEMENT);
         this.offerProperties(this.stop);
         this.listeners.add(new Listener<MovePlayerEvent>("fast_ladder_move_player_listener"){
 

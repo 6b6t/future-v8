@@ -1,10 +1,10 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.command;
+package me.friendly.exeter.command;
 
-import com.gitlab.nuf.exeter.command.Argument;
 import java.util.StringJoiner;
+import me.friendly.exeter.command.Argument;
 import net.minecraft.client.Minecraft;
 
 public abstract class Command {

@@ -4,18 +4,22 @@
  * Could not load the following classes:
  *  org.lwjgl.opengl.GL11
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.render;
+package me.friendly.exeter.module.impl.toggle.render;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.api.minecraft.render.RenderMethods;
-import com.gitlab.nuf.exeter.events.RenderEvent;
-import com.gitlab.nuf.exeter.module.ModuleType;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
-import com.gitlab.nuf.exeter.presets.Preset;
-import com.gitlab.nuf.exeter.properties.NumberProperty;
-import com.gitlab.nuf.exeter.properties.Property;
+import me.friendly.api.event.Listener;
+import me.friendly.api.minecraft.render.RenderMethods;
+import me.friendly.exeter.core.Exeter;
+import me.friendly.exeter.events.RenderEvent;
+import me.friendly.exeter.module.ModuleType;
+import me.friendly.exeter.module.ToggleableModule;
+import me.friendly.exeter.presets.Preset;
+import me.friendly.exeter.properties.NumberProperty;
+import me.friendly.exeter.properties.Property;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
@@ -26,6 +30,7 @@ import org.lwjgl.opengl.GL11;
 public final class StorageESP
 extends ToggleableModule {
     private final Property<Boolean> tags = new Property<Boolean>(true, "NameTags", "plates", "tags", "labels", "np", "nameplates", "nametag", "nt");
+    private final Property<Boolean> outline = new Property<Boolean>(true, "Outline", "outline", "o");
     private final Property<Boolean> lines = new Property<Boolean>(true, "Lines", "line", "l");
     private final Property<Boolean> chest = new Property<Boolean>(true, "Chests", "chest", "c");
     private final Property<Boolean> enderchest = new Property<Boolean>(true, "EnderChests", "enderchest", "echest");
@@ -33,8 +38,8 @@ extends ToggleableModule {
     private final NumberProperty<Float> width = new NumberProperty<Float>(Float.valueOf(1.8f), Float.valueOf(1.0f), Float.valueOf(5.0f), "Width", "w");
 
     public StorageESP() {
-        super("Storage ESP", new String[]{"storageesp", "cesp", "sesp", "chestesp"}, ModuleType.RENDER);
-        this.offerProperties(this.tags, this.chest, this.enderchest, this.lines, this.width);
+        super("StorageESP", new String[]{"storageesp", "cesp", "sesp", "chestesp"}, ModuleType.RENDER);
+        this.offerProperties(this.tags, this.chest, this.enderchest, this.lines, this.width, this.outline);
         this.offsetPresets(new Preset("Cluster"){
 
             @Override
@@ -54,32 +59,32 @@ extends ToggleableModule {
 
             @Override
             public void call(RenderEvent event) {
-                double z2;
-                double y2;
-                double x2;
+                double z;
+                double y;
+                double x;
                 TileEntity tileEntity;
                 GlStateManager.pushMatrix();
                 RenderMethods.enableGL3D();
                 for (Object object : ((StorageESP)StorageESP.this).minecraft.theWorld.loadedTileEntityList) {
                     tileEntity = (TileEntity)object;
                     if (!StorageESP.this.shouldDraw(tileEntity)) continue;
-                    x2 = (double)tileEntity.getPos().getX() - ((StorageESP)StorageESP.this).minecraft.getRenderManager().renderPosX;
-                    y2 = (double)tileEntity.getPos().getY() - ((StorageESP)StorageESP.this).minecraft.getRenderManager().renderPosY;
-                    z2 = (double)tileEntity.getPos().getZ() - ((StorageESP)StorageESP.this).minecraft.getRenderManager().renderPosZ;
+                    x = (double)tileEntity.getPos().getX() - ((StorageESP)StorageESP.this).minecraft.getRenderManager().renderPosX;
+                    y = (double)tileEntity.getPos().getY() - ((StorageESP)StorageESP.this).minecraft.getRenderManager().renderPosY;
+                    z = (double)tileEntity.getPos().getZ() - ((StorageESP)StorageESP.this).minecraft.getRenderManager().renderPosZ;
                     float[] color = StorageESP.this.getColor(tileEntity);
-                    AxisAlignedBB box = new AxisAlignedBB(x2, y2, z2, x2 + 1.0, y2 + 1.0, z2 + 1.0);
+                    AxisAlignedBB box = new AxisAlignedBB(x, y, z, x + 1.0, y + 1.0, z + 1.0);
                     if (tileEntity instanceof TileEntityChest) {
                         TileEntityChest chest = (TileEntityChest)TileEntityChest.class.cast(tileEntity);
                         if (chest.adjacentChestZPos != null) {
-                            box = new AxisAlignedBB(x2 + 0.0625, y2, z2 + 0.0625, x2 + 0.9375, y2 + 0.875, z2 + 1.9375);
+                            box = new AxisAlignedBB(x + 0.0625, y, z + 0.0625, x + 0.9375, y + 0.875, z + 1.9375);
                         } else if (chest.adjacentChestXPos != null) {
-                            box = new AxisAlignedBB(x2 + 0.0625, y2, z2 + 0.0625, x2 + 1.9375, y2 + 0.875, z2 + 0.9375);
+                            box = new AxisAlignedBB(x + 0.0625, y, z + 0.0625, x + 1.9375, y + 0.875, z + 0.9375);
                         } else {
                             if (chest.adjacentChestZPos != null || chest.adjacentChestXPos != null || chest.adjacentChestZNeg != null || chest.adjacentChestXNeg != null) continue;
-                            box = new AxisAlignedBB(x2 + 0.0625, y2, z2 + 0.0625, x2 + 0.9375, y2 + 0.875, z2 + 0.9375);
+                            box = new AxisAlignedBB(x + 0.0625, y, z + 0.0625, x + 0.9375, y + 0.875, z + 0.9375);
                         }
                     } else if (tileEntity instanceof TileEntityEnderChest) {
-                        box = new AxisAlignedBB(x2 + 0.0625, y2, z2 + 0.0625, x2 + 0.9375, y2 + 0.875, z2 + 0.9375);
+                        box = new AxisAlignedBB(x + 0.0625, y, z + 0.0625, x + 0.9375, y + 0.875, z + 0.9375);
                     }
                     GlStateManager.color(color[0], color[1], color[2], 0.45f);
                     boolean bobbing = ((StorageESP)StorageESP.this).minecraft.gameSettings.viewBobbing;
@@ -91,24 +96,41 @@ extends ToggleableModule {
                         ((StorageESP)StorageESP.this).minecraft.entityRenderer.orientCamera(event.getPartialTicks());
                         GL11.glBegin((int)1);
                         GL11.glVertex3d((double)0.0, (double)((StorageESP)StorageESP.this).minecraft.thePlayer.getEyeHeight(), (double)0.0);
-                        GL11.glVertex3d((double)(x2 + 0.5), (double)y2, (double)(z2 + 0.5));
+                        GL11.glVertex3d((double)(x + 0.5), (double)y, (double)(z + 0.5));
                         GL11.glEnd();
                         GlStateManager.popMatrix();
                     }
-                    RenderMethods.drawBox(box);
-                    RenderMethods.renderCrosses(box);
-                    RenderMethods.drawOutlinedBox(box);
+                    if (((Boolean)StorageESP.this.outline.getValue()).booleanValue()) {
+                        StorageESP.this.renderOne();
+                        GlStateManager.color(color[0], color[1], color[2], 0.45f);
+                        RenderMethods.drawBox(box);
+                        StorageESP.this.renderTwo();
+                        GlStateManager.color(color[0], color[1], color[2], 0.45f);
+                        RenderMethods.drawBox(box);
+                        StorageESP.this.renderThree();
+                        GlStateManager.color(color[0], color[1], color[2], 0.45f);
+                        RenderMethods.drawBox(box);
+                        StorageESP.this.renderFour();
+                        GlStateManager.color(color[0], color[1], color[2], 0.45f);
+                        RenderMethods.drawBox(box);
+                        StorageESP.this.renderFive();
+                        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+                    } else {
+                        RenderMethods.drawBox(box);
+                        RenderMethods.renderCrosses(box);
+                        RenderMethods.drawOutlinedBox(box);
+                    }
                     ((StorageESP)StorageESP.this).minecraft.gameSettings.viewBobbing = bobbing;
                 }
                 for (Object object : ((StorageESP)StorageESP.this).minecraft.theWorld.loadedTileEntityList) {
                     tileEntity = (TileEntity)object;
                     if (!StorageESP.this.shouldDraw(tileEntity)) continue;
-                    x2 = (double)tileEntity.getPos().getX() + 0.5 - ((StorageESP)StorageESP.this).minecraft.getRenderManager().renderPosX;
-                    y2 = (double)tileEntity.getPos().getY() - 1.0 - ((StorageESP)StorageESP.this).minecraft.getRenderManager().renderPosY;
-                    z2 = (double)tileEntity.getPos().getZ() + 0.5 - ((StorageESP)StorageESP.this).minecraft.getRenderManager().renderPosZ;
+                    x = (double)tileEntity.getPos().getX() + 0.5 - ((StorageESP)StorageESP.this).minecraft.getRenderManager().renderPosX;
+                    y = (double)tileEntity.getPos().getY() - 1.0 - ((StorageESP)StorageESP.this).minecraft.getRenderManager().renderPosY;
+                    z = (double)tileEntity.getPos().getZ() + 0.5 - ((StorageESP)StorageESP.this).minecraft.getRenderManager().renderPosZ;
                     if (!((Boolean)StorageESP.this.tags.getValue()).booleanValue()) continue;
                     GlStateManager.pushMatrix();
-                    StorageESP.this.renderTileEntityNameTag(tileEntity, x2, y2, z2);
+                    StorageESP.this.renderTileEntityNameTag(tileEntity, x, y, z);
                     GlStateManager.popMatrix();
                 }
                 RenderMethods.disableGL3D();
@@ -137,10 +159,10 @@ extends ToggleableModule {
         return new float[]{1.0f, 1.0f, 1.0f};
     }
 
-    private void renderTileEntityNameTag(TileEntity tileEntity, double x2, double y2, double z2) {
-        double tempY = y2;
+    private void renderTileEntityNameTag(TileEntity tileEntity, double x, double y, double z) {
+        double tempY = y;
         tempY += 0.7;
-        double distance = this.minecraft.getRenderViewEntity().getDistance(x2 + this.minecraft.getRenderManager().viewerPosX, y2 + this.minecraft.getRenderManager().viewerPosY, z2 + this.minecraft.getRenderManager().viewerPosZ);
+        double distance = this.minecraft.getRenderViewEntity().getDistance(x + this.minecraft.getRenderManager().viewerPosX, y + this.minecraft.getRenderManager().viewerPosY, z + this.minecraft.getRenderManager().viewerPosZ);
         int width = this.minecraft.fontRenderer.getStringWidth(this.getDisplayName(tileEntity)) / 2 + 1;
         double scale = 0.0018 + (double)((Float)this.scaling.getValue()).floatValue() * distance;
         if (distance <= 8.0) {
@@ -150,7 +172,7 @@ extends ToggleableModule {
         GlStateManager.enablePolygonOffset();
         GlStateManager.doPolygonOffset(1.0f, -1500000.0f);
         GlStateManager.disableLighting();
-        GlStateManager.translate((float)x2, (float)tempY + 1.4f, (float)z2);
+        GlStateManager.translate((float)x, (float)tempY + 1.4f, (float)z);
         GlStateManager.rotate(-this.minecraft.getRenderManager().playerViewY, 0.0f, 1.0f, 0.0f);
         GlStateManager.rotate(this.minecraft.getRenderManager().playerViewX, this.minecraft.gameSettings.thirdPersonView == 2 ? -1.0f : 1.0f, 0.0f, 0.0f);
         GlStateManager.scale(-scale, -scale, scale);
@@ -167,6 +189,72 @@ extends ToggleableModule {
         GlStateManager.disablePolygonOffset();
         GlStateManager.doPolygonOffset(1.0f, 1500000.0f);
         GlStateManager.popMatrix();
+    }
+
+    public void renderOne() {
+        GL11.glPushAttrib((int)1048575);
+        GL11.glDisable((int)3008);
+        GL11.glDisable((int)3553);
+        GL11.glDisable((int)2896);
+        GL11.glEnable((int)3042);
+        GL11.glBlendFunc((int)770, (int)771);
+        GL11.glLineWidth((float)(((Float)this.width.getValue()).floatValue() * 2.0f));
+        GL11.glEnable((int)2848);
+        GL11.glEnable((int)2960);
+        GL11.glClear((int)1024);
+        GL11.glClearStencil((int)15);
+        GL11.glStencilFunc((int)512, (int)1, (int)15);
+        GL11.glStencilOp((int)7681, (int)7681, (int)7681);
+        GL11.glPolygonMode((int)1028, (int)6913);
+    }
+
+    public void renderTwo() {
+        GL11.glStencilFunc((int)512, (int)0, (int)15);
+        GL11.glStencilOp((int)7681, (int)7681, (int)7681);
+        GL11.glPolygonMode((int)1028, (int)6914);
+    }
+
+    public void renderThree() {
+        GL11.glStencilFunc((int)514, (int)1, (int)15);
+        GL11.glStencilOp((int)7680, (int)7680, (int)7680);
+        GL11.glPolygonMode((int)1028, (int)6913);
+    }
+
+    public void renderFour(Entity renderEntity) {
+        float[] color;
+        if (renderEntity instanceof EntityLivingBase) {
+            float distance;
+            EntityLivingBase entity = (EntityLivingBase)renderEntity;
+            color = Exeter.getInstance().getFriendManager().isFriend(entity.getName()) ? new float[]{0.27f, 0.7f, 0.92f} : ((distance = this.minecraft.thePlayer.getDistanceToEntity(entity)) <= 32.0f ? new float[]{1.0f, distance / 32.0f, 0.0f} : new float[]{0.0f, 0.9f, 0.0f});
+        } else {
+            float distance = this.minecraft.thePlayer.getDistanceToEntity(renderEntity);
+            color = distance <= 32.0f ? new float[]{1.0f, distance / 32.0f, 0.0f} : new float[]{0.0f, 0.9f, 0.0f};
+        }
+        GlStateManager.color(color[0], color[1], color[2], 0.85f);
+        this.renderFour();
+    }
+
+    private void renderFour() {
+        GL11.glDepthMask((boolean)false);
+        GL11.glDisable((int)2929);
+        GL11.glEnable((int)10754);
+        GL11.glPolygonOffset((float)1.0f, (float)-2000000.0f);
+        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240.0f, 240.0f);
+    }
+
+    public void renderFive() {
+        GL11.glPolygonOffset((float)1.0f, (float)2000000.0f);
+        GL11.glDisable((int)10754);
+        GL11.glEnable((int)2929);
+        GL11.glDepthMask((boolean)true);
+        GL11.glDisable((int)2960);
+        GL11.glDisable((int)2848);
+        GL11.glHint((int)3154, (int)4352);
+        GL11.glEnable((int)3042);
+        GL11.glEnable((int)2896);
+        GL11.glEnable((int)3553);
+        GL11.glEnable((int)3008);
+        GL11.glPopAttrib();
     }
 
     private String getDisplayName(TileEntity tileEntity) {

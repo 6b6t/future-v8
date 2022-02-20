@@ -1,15 +1,15 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.render;
+package me.friendly.exeter.module.impl.toggle.render;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.api.stopwatch.Stopwatch;
-import com.gitlab.nuf.exeter.events.TickEvent;
-import com.gitlab.nuf.exeter.module.ModuleType;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
-import com.gitlab.nuf.exeter.properties.EnumProperty;
-import com.gitlab.nuf.exeter.properties.NumberProperty;
+import me.friendly.api.event.Listener;
+import me.friendly.api.stopwatch.Stopwatch;
+import me.friendly.exeter.events.TickEvent;
+import me.friendly.exeter.module.ModuleType;
+import me.friendly.exeter.module.ToggleableModule;
+import me.friendly.exeter.properties.EnumProperty;
+import me.friendly.exeter.properties.NumberProperty;
 import net.minecraft.util.EnumParticleTypes;
 
 public final class Trails

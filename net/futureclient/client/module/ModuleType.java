@@ -1,7 +1,7 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.module;
+package me.friendly.exeter.module;
 
 public enum ModuleType {
     COMBAT("Combat"),

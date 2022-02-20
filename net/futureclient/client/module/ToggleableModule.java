@@ -1,16 +1,16 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.module;
+package me.friendly.exeter.module;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.api.interfaces.Toggleable;
-import com.gitlab.nuf.exeter.core.Exeter;
-import com.gitlab.nuf.exeter.keybind.Keybind;
-import com.gitlab.nuf.exeter.module.Module;
-import com.gitlab.nuf.exeter.module.ModuleType;
 import java.util.ArrayList;
 import java.util.List;
+import me.friendly.api.event.Listener;
+import me.friendly.api.interfaces.Toggleable;
+import me.friendly.exeter.core.Exeter;
+import me.friendly.exeter.keybind.Keybind;
+import me.friendly.exeter.module.Module;
+import me.friendly.exeter.module.ModuleType;
 
 public class ToggleableModule
 extends Module

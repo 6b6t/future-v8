@@ -4,20 +4,20 @@
  * Could not load the following classes:
  *  org.lwjgl.opengl.GL11
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.render;
+package me.friendly.exeter.module.impl.toggle.render;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.api.interfaces.Labeled;
-import com.gitlab.nuf.api.minecraft.render.RenderMethods;
-import com.gitlab.nuf.exeter.command.Argument;
-import com.gitlab.nuf.exeter.command.Command;
-import com.gitlab.nuf.exeter.core.Exeter;
-import com.gitlab.nuf.exeter.events.RenderEvent;
-import com.gitlab.nuf.exeter.module.ModuleType;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
-import com.gitlab.nuf.exeter.properties.NumberProperty;
 import java.util.ArrayList;
 import java.util.List;
+import me.friendly.api.event.Listener;
+import me.friendly.api.interfaces.Labeled;
+import me.friendly.api.minecraft.render.RenderMethods;
+import me.friendly.exeter.command.Argument;
+import me.friendly.exeter.command.Command;
+import me.friendly.exeter.core.Exeter;
+import me.friendly.exeter.events.RenderEvent;
+import me.friendly.exeter.module.ModuleType;
+import me.friendly.exeter.module.ToggleableModule;
+import me.friendly.exeter.properties.NumberProperty;
 import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.opengl.GL11;
 
@@ -34,11 +34,11 @@ extends ToggleableModule {
 
             @Override
             public String dispatch() {
-                int z2;
-                int y2;
-                int x2;
+                int z;
+                int y;
+                int x;
                 String name = this.getArgument("label").getValue();
-                Point point = new Point(name, x2 = Integer.parseInt(this.getArgument("x").getValue()), y2 = Integer.parseInt(this.getArgument("y").getValue()), z2 = Integer.parseInt(this.getArgument("z").getValue()));
+                Point point = new Point(name, x = Integer.parseInt(this.getArgument("x").getValue()), y = Integer.parseInt(this.getArgument("y").getValue()), z = Integer.parseInt(this.getArgument("z").getValue()));
                 if (!Waypoints.this.isValidPoint(point)) {
                     Waypoints.this.points.add(point);
                 }
@@ -64,15 +64,15 @@ extends ToggleableModule {
 
             @Override
             public void call(RenderEvent event) {
-                double z2;
-                double y2;
-                double x2;
+                double z;
+                double y;
+                double x;
                 GlStateManager.pushMatrix();
                 RenderMethods.enableGL3D();
                 for (Point point : Waypoints.this.points) {
-                    x2 = (double)point.getX() - ((Waypoints)Waypoints.this).minecraft.getRenderManager().renderPosX;
-                    y2 = (double)point.getY() - ((Waypoints)Waypoints.this).minecraft.getRenderManager().renderPosY;
-                    z2 = (double)point.getZ() - ((Waypoints)Waypoints.this).minecraft.getRenderManager().renderPosZ;
+                    x = (double)point.getX() - ((Waypoints)Waypoints.this).minecraft.getRenderManager().renderPosX;
+                    y = (double)point.getY() - ((Waypoints)Waypoints.this).minecraft.getRenderManager().renderPosY;
+                    z = (double)point.getZ() - ((Waypoints)Waypoints.this).minecraft.getRenderManager().renderPosZ;
                     GlStateManager.color(0.7f, 0.1f, 0.2f, 0.7f);
                     boolean bobbing = ((Waypoints)Waypoints.this).minecraft.gameSettings.viewBobbing;
                     GL11.glLineWidth((float)((Float)Waypoints.this.width.getValue()).floatValue());
@@ -81,18 +81,18 @@ extends ToggleableModule {
                     ((Waypoints)Waypoints.this).minecraft.entityRenderer.orientCamera(event.getPartialTicks());
                     GL11.glBegin((int)1);
                     GL11.glVertex3d((double)0.0, (double)((Waypoints)Waypoints.this).minecraft.thePlayer.getEyeHeight(), (double)0.0);
-                    GL11.glVertex3d((double)x2, (double)y2, (double)z2);
-                    GL11.glVertex3d((double)x2, (double)y2, (double)z2);
-                    GL11.glVertex3d((double)x2, (double)(y2 + 2.0), (double)z2);
+                    GL11.glVertex3d((double)x, (double)y, (double)z);
+                    GL11.glVertex3d((double)x, (double)y, (double)z);
+                    GL11.glVertex3d((double)x, (double)(y + 2.0), (double)z);
                     GL11.glEnd();
                     ((Waypoints)Waypoints.this).minecraft.gameSettings.viewBobbing = bobbing;
                 }
                 for (Point point : Waypoints.this.points) {
-                    x2 = (double)point.getX() - ((Waypoints)Waypoints.this).minecraft.getRenderManager().renderPosX;
-                    y2 = (double)point.getY() - ((Waypoints)Waypoints.this).minecraft.getRenderManager().renderPosY;
-                    z2 = (double)point.getZ() - ((Waypoints)Waypoints.this).minecraft.getRenderManager().renderPosZ;
+                    x = (double)point.getX() - ((Waypoints)Waypoints.this).minecraft.getRenderManager().renderPosX;
+                    y = (double)point.getY() - ((Waypoints)Waypoints.this).minecraft.getRenderManager().renderPosY;
+                    z = (double)point.getZ() - ((Waypoints)Waypoints.this).minecraft.getRenderManager().renderPosZ;
                     GlStateManager.pushMatrix();
-                    Waypoints.this.renderPointNameTag(point, x2, y2, z2);
+                    Waypoints.this.renderPointNameTag(point, x, y, z);
                     GlStateManager.popMatrix();
                 }
                 RenderMethods.disableGL3D();
@@ -102,8 +102,8 @@ extends ToggleableModule {
     }
 
     private boolean isValidPoint(Point point) {
-        for (Point p2 : this.points) {
-            if (p2.getX() != point.getX() || p2.getY() != point.getY() || p2.getZ() != point.getZ()) continue;
+        for (Point p : this.points) {
+            if (p.getX() != point.getX() || p.getY() != point.getY() || p.getZ() != point.getZ()) continue;
             return true;
         }
         return false;
@@ -117,10 +117,10 @@ extends ToggleableModule {
         return null;
     }
 
-    private void renderPointNameTag(Point point, double x2, double y2, double z2) {
-        double tempY = y2;
+    private void renderPointNameTag(Point point, double x, double y, double z) {
+        double tempY = y;
         tempY += 0.7;
-        double distance = this.minecraft.getRenderViewEntity().getDistance(x2 + this.minecraft.getRenderManager().viewerPosX, y2 + this.minecraft.getRenderManager().viewerPosY, z2 + this.minecraft.getRenderManager().viewerPosZ);
+        double distance = this.minecraft.getRenderViewEntity().getDistance(x + this.minecraft.getRenderManager().viewerPosX, y + this.minecraft.getRenderManager().viewerPosY, z + this.minecraft.getRenderManager().viewerPosZ);
         int width = this.minecraft.fontRenderer.getStringWidth(point.getLabel()) / 2 + 1;
         double scale = 0.0018 + (double)((Float)this.scaling.getValue()).floatValue() * distance;
         if (distance <= 8.0) {
@@ -130,7 +130,7 @@ extends ToggleableModule {
         GlStateManager.enablePolygonOffset();
         GlStateManager.doPolygonOffset(1.0f, -1500000.0f);
         GlStateManager.disableLighting();
-        GlStateManager.translate((float)x2, (float)tempY + 1.4f, (float)z2);
+        GlStateManager.translate((float)x, (float)tempY + 1.4f, (float)z);
         GlStateManager.rotate(-this.minecraft.getRenderManager().playerViewY, 0.0f, 1.0f, 0.0f);
         GlStateManager.rotate(this.minecraft.getRenderManager().playerViewX, this.minecraft.gameSettings.thirdPersonView == 2 ? -1.0f : 1.0f, 0.0f, 0.0f);
         GlStateManager.scale(-scale, -scale, scale);
@@ -156,11 +156,11 @@ extends ToggleableModule {
         private final int y;
         private final int z;
 
-        public Point(String label, int x2, int y2, int z2) {
+        public Point(String label, int x, int y, int z) {
             this.label = label;
-            this.x = x2;
-            this.y = y2;
-            this.z = z2;
+            this.x = x;
+            this.y = y;
+            this.z = z;
         }
 
         @Override

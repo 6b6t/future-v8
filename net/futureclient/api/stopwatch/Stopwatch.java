@@ -1,7 +1,7 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.api.stopwatch;
+package me.friendly.api.stopwatch;
 
 public class Stopwatch {
     private long previousMS;

@@ -4,9 +4,9 @@
  * Could not load the following classes:
  *  org.lwjgl.input.Keyboard
  */
-package com.gitlab.nuf.exeter.gui.screens.accountmanager;
+package me.friendly.exeter.gui.screens.accountmanager;
 
-import com.gitlab.nuf.exeter.gui.screens.accountmanager.GuiPasswordField;
+import me.friendly.exeter.gui.screens.accountmanager.GuiPasswordField;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;

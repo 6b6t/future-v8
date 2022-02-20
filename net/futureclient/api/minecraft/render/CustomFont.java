@@ -4,7 +4,7 @@
  * Could not load the following classes:
  *  org.lwjgl.opengl.GL11
  */
-package com.gitlab.nuf.api.minecraft.render;
+package me.friendly.api.minecraft.render;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -71,8 +71,8 @@ public class CustomFont {
             this.theFont = font instanceof Font ? (Font)font : (font instanceof File ? Font.createFont(0, (File)font).deriveFont(size) : (font instanceof InputStream ? Font.createFont(0, (InputStream)font).deriveFont(size) : (font instanceof String ? new Font((String)font, 0, Math.round(size)) : new Font("Verdana", 0, Math.round(size)))));
             this.theGraphics.setFont(this.theFont);
         }
-        catch (Exception e2) {
-            e2.printStackTrace();
+        catch (Exception e) {
+            e.printStackTrace();
             this.theFont = new Font("Verdana", 0, Math.round(size));
             this.theGraphics.setFont(this.theFont);
         }
@@ -80,22 +80,22 @@ public class CustomFont {
         this.theGraphics.fillRect(0, 0, 256, 256);
         this.theGraphics.setColor(Color.white);
         this.theMetrics = this.theGraphics.getFontMetrics();
-        float x2 = 5.0f;
-        float y2 = 5.0f;
-        for (int i2 = this.startChar; i2 < this.endChar; ++i2) {
-            this.theGraphics.drawString(Character.toString((char)i2), x2, y2 + (float)this.theMetrics.getAscent());
-            this.xPos[i2 - this.startChar] = x2;
-            this.yPos[i2 - this.startChar] = y2 - (float)this.theMetrics.getMaxDescent();
-            x2 += (float)this.theMetrics.stringWidth(Character.toString((char)i2)) + 2.0f;
-            if (!(x2 >= (float)(250 - this.theMetrics.getMaxAdvance()))) continue;
-            x2 = 5.0f;
-            y2 += (float)(this.theMetrics.getMaxAscent() + this.theMetrics.getMaxDescent()) + this.fontSize / 2.0f;
+        float x = 5.0f;
+        float y = 5.0f;
+        for (int i = this.startChar; i < this.endChar; ++i) {
+            this.theGraphics.drawString(Character.toString((char)i), x, y + (float)this.theMetrics.getAscent());
+            this.xPos[i - this.startChar] = x;
+            this.yPos[i - this.startChar] = y - (float)this.theMetrics.getMaxDescent();
+            x += (float)this.theMetrics.stringWidth(Character.toString((char)i)) + 2.0f;
+            if (!(x >= (float)(250 - this.theMetrics.getMaxAdvance()))) continue;
+            x = 5.0f;
+            y += (float)(this.theMetrics.getMaxAscent() + this.theMetrics.getMaxDescent()) + this.fontSize / 2.0f;
         }
         this.dynamicTexture = new DynamicTexture(this.bufferedImage);
         this.resourceLocation = Minecraft.getMinecraft().getTextureManager().getDynamicTextureLocation("font" + font.toString() + size, this.dynamicTexture);
     }
 
-    public final void drawString(String text, float x2, float y2, FontType fontType, int color, int color2) {
+    public final void drawString(String text, float x, float y, FontType fontType, int color, int color2) {
         GL11.glPushMatrix();
         text = this.stripUnsupported(text);
         GL11.glEnable((int)3042);
@@ -111,30 +111,30 @@ public class CustomFont {
         String text2 = this.stripControlCodes(text);
         switch (fontType.ordinal()) {
             case 1: {
-                this.drawer(text2, x2 + 0.5f, y2, color2);
-                this.drawer(text2, x2 - 0.5f, y2, color2);
-                this.drawer(text2, x2, y2 + 0.5f, color2);
-                this.drawer(text2, x2, y2 - 0.5f, color2);
+                this.drawer(text2, x + 0.5f, y, color2);
+                this.drawer(text2, x - 0.5f, y, color2);
+                this.drawer(text2, x, y + 0.5f, color2);
+                this.drawer(text2, x, y - 0.5f, color2);
                 break;
             }
             case 2: {
-                this.drawer(text2, x2 + 0.5f, y2 + 0.5f, color2);
+                this.drawer(text2, x + 0.5f, y + 0.5f, color2);
                 break;
             }
             case 3: {
-                this.drawer(text2, x2 + 0.5f, y2 + 1.0f, color2);
+                this.drawer(text2, x + 0.5f, y + 1.0f, color2);
                 break;
             }
             case 4: {
-                this.drawer(text2, x2, y2 + 0.5f, color2);
+                this.drawer(text2, x, y + 0.5f, color2);
                 break;
             }
             case 5: {
-                this.drawer(text2, x2, y2 - 0.5f, color2);
+                this.drawer(text2, x, y - 0.5f, color2);
                 break;
             }
         }
-        this.drawer(text, x2, y2, color);
+        this.drawer(text, x, y, color);
         GL11.glScalef((float)2.0f, (float)2.0f, (float)2.0f);
         GL11.glShadeModel((int)7424);
         GL11.glDisable((int)3042);
@@ -146,17 +146,17 @@ public class CustomFont {
         GL11.glPopMatrix();
     }
 
-    public void drawCenteredString(String text, float x2, float y2, int color) {
-        this.drawString(text, x2 - this.getStringWidth(text) / 2.0f, y2, FontType.SHADOW_THIN, color);
+    public void drawCenteredString(String text, float x, float y, int color) {
+        this.drawString(text, x - this.getStringWidth(text) / 2.0f, y, FontType.SHADOW_THIN, color);
     }
 
-    public final void drawString(String text, float x2, float y2, FontType fontType, int color) {
-        this.drawString(text, x2, y2, fontType, color, -1157627904);
+    public final void drawString(String text, float x, float y, FontType fontType, int color) {
+        this.drawString(text, x, y, fontType, color, -1157627904);
     }
 
-    private final void drawer(String text, float x2, float y2, int color) {
-        x2 *= 2.0f;
-        y2 *= 2.0f;
+    private final void drawer(String text, float x, float y, int color) {
+        x *= 2.0f;
+        y *= 2.0f;
         GL11.glEnable((int)3553);
         Minecraft.getMinecraft().getTextureManager().bindTexture(this.resourceLocation);
         float alpha = (float)(color >> 24 & 0xFF) / 255.0f;
@@ -164,14 +164,14 @@ public class CustomFont {
         float green = (float)(color >> 8 & 0xFF) / 255.0f;
         float blue = (float)(color & 0xFF) / 255.0f;
         GL11.glColor4f((float)red, (float)green, (float)blue, (float)alpha);
-        float startX = x2;
-        for (int i2 = 0; i2 < text.length(); ++i2) {
-            if (text.charAt(i2) == '\u00a7' && i2 + 1 < text.length()) {
+        float startX = x;
+        for (int i = 0; i < text.length(); ++i) {
+            if (text.charAt(i) == '\u00a7' && i + 1 < text.length()) {
                 int colorCode;
-                char oneMore = Character.toLowerCase(text.charAt(i2 + 1));
+                char oneMore = Character.toLowerCase(text.charAt(i + 1));
                 if (oneMore == 'n') {
-                    y2 += (float)(this.theMetrics.getAscent() + 2);
-                    x2 = startX;
+                    y += (float)(this.theMetrics.getAscent() + 2);
+                    x = startX;
                 }
                 if ((colorCode = "0123456789abcdefklmnorg".indexOf(oneMore)) < 16) {
                     try {
@@ -188,18 +188,18 @@ public class CustomFont {
                 } else if (oneMore == 'g') {
                     GL11.glColor4f((float)0.47f, (float)0.67f, (float)0.27f, (float)alpha);
                 }
-                ++i2;
+                ++i;
                 continue;
             }
             try {
-                char c2 = text.charAt(i2);
-                this.drawChar(c2, x2, y2);
-                x2 += this.getStringWidth(Character.toString(c2)) * 2.0f;
+                char c = text.charAt(i);
+                this.drawChar(c, x, y);
+                x += this.getStringWidth(Character.toString(c)) * 2.0f;
                 continue;
             }
             catch (ArrayIndexOutOfBoundsException indexException) {
-                char c3 = text.charAt(i2);
-                System.out.println("Can't draw character: " + c3 + " (" + Character.getNumericValue(c3) + ")");
+                char c = text.charAt(i);
+                System.out.println("Can't draw character: " + c + " (" + Character.getNumericValue(c) + ")");
             }
         }
     }
@@ -216,9 +216,9 @@ public class CustomFont {
         return this.theMetrics.getStringBounds(text, this.theGraphics);
     }
 
-    private final void drawChar(char character, float x2, float y2) throws ArrayIndexOutOfBoundsException {
+    private final void drawChar(char character, float x, float y) throws ArrayIndexOutOfBoundsException {
         Rectangle2D bounds = this.theMetrics.getStringBounds(Character.toString(character), this.theGraphics);
-        this.drawTexturedModalRect(x2, y2, this.xPos[character - this.startChar], this.yPos[character - this.startChar], (float)bounds.getWidth(), (float)bounds.getHeight() + (float)this.theMetrics.getMaxDescent() + 1.0f);
+        this.drawTexturedModalRect(x, y, this.xPos[character - this.startChar], this.yPos[character - this.startChar], (float)bounds.getWidth(), (float)bounds.getHeight() + (float)this.theMetrics.getMaxDescent() + 1.0f);
     }
 
     private final List listFormattedStringToWidth(String s, int width) {
@@ -235,7 +235,7 @@ public class CustomFont {
         try {
             return split + "\n" + this.wrapFormattedStringToWidth(split2, width);
         }
-        catch (Exception e2) {
+        catch (Exception e) {
             System.out.println("Cannot wrap string to width.");
             return "";
         }
@@ -318,15 +318,15 @@ public class CustomFont {
         return par0 >= 'k' && par0 <= 'o' || par0 >= 'K' && par0 <= 'O' || par0 == 'r' || par0 == 'R';
     }
 
-    private final void drawTexturedModalRect(float x2, float y2, float u2, float v2, float width, float height) {
+    private final void drawTexturedModalRect(float x, float y, float u, float v, float width, float height) {
         float scale = 0.0039063f;
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer renderer = tessellator.getWorldRenderer();
         renderer.startDrawingQuads();
-        renderer.addVertexWithUV(x2 + 0.0f, y2 + height, 0.0, (u2 + 0.0f) * scale, (v2 + height) * scale);
-        renderer.addVertexWithUV(x2 + width, y2 + height, 0.0, (u2 + width) * scale, (v2 + height) * scale);
-        renderer.addVertexWithUV(x2 + width, y2 + 0.0f, 0.0, (u2 + width) * scale, (v2 + 0.0f) * scale);
-        renderer.addVertexWithUV(x2 + 0.0f, y2 + 0.0f, 0.0, (u2 + 0.0f) * scale, (v2 + 0.0f) * scale);
+        renderer.addVertexWithUV(x + 0.0f, y + height, 0.0, (u + 0.0f) * scale, (v + height) * scale);
+        renderer.addVertexWithUV(x + width, y + height, 0.0, (u + width) * scale, (v + height) * scale);
+        renderer.addVertexWithUV(x + width, y + 0.0f, 0.0, (u + width) * scale, (v + 0.0f) * scale);
+        renderer.addVertexWithUV(x + 0.0f, y + 0.0f, 0.0, (u + 0.0f) * scale, (v + 0.0f) * scale);
         tessellator.draw();
     }
 

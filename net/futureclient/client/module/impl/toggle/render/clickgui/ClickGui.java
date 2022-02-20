@@ -1,17 +1,17 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.module.impl.toggle.render.clickgui;
+package me.friendly.exeter.module.impl.toggle.render.clickgui;
 
-import com.gitlab.nuf.api.interfaces.Toggleable;
-import com.gitlab.nuf.api.minecraft.render.CustomFont;
-import com.gitlab.nuf.exeter.core.Exeter;
-import com.gitlab.nuf.exeter.module.Module;
-import com.gitlab.nuf.exeter.module.ModuleType;
-import com.gitlab.nuf.exeter.module.ToggleableModule;
-import com.gitlab.nuf.exeter.module.impl.toggle.render.clickgui.Panel;
-import com.gitlab.nuf.exeter.module.impl.toggle.render.clickgui.item.ModuleButton;
 import java.util.ArrayList;
+import me.friendly.api.interfaces.Toggleable;
+import me.friendly.api.minecraft.render.CustomFont;
+import me.friendly.exeter.core.Exeter;
+import me.friendly.exeter.module.Module;
+import me.friendly.exeter.module.ModuleType;
+import me.friendly.exeter.module.ToggleableModule;
+import me.friendly.exeter.module.impl.toggle.render.clickgui.Panel;
+import me.friendly.exeter.module.impl.toggle.render.clickgui.item.ModuleButton;
 import net.minecraft.client.gui.GuiScreen;
 
 public final class ClickGui
@@ -31,9 +31,9 @@ extends GuiScreen {
     }
 
     private void load() {
-        int x2 = -84;
+        int x = -84;
         for (final ModuleType moduleType : ModuleType.values()) {
-            this.panels.add(new Panel(moduleType.getLabel(), x2 += 90, 4, true){
+            this.panels.add(new Panel(moduleType.getLabel(), x += 90, 4, true){
 
                 @Override
                 public void setupItems() {
@@ -46,7 +46,7 @@ extends GuiScreen {
                 }
             });
         }
-        this.panels.add(new Panel("Always Active", x2 += 90, 4, true){
+        this.panels.add(new Panel("Always Active", x += 90, 4, true){
 
             @Override
             public void setupItems() {

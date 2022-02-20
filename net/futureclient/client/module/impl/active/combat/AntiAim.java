@@ -1,12 +1,12 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package com.gitlab.nuf.exeter.module.impl.active.combat;
+package me.friendly.exeter.module.impl.active.combat;
 
-import com.gitlab.nuf.api.event.Listener;
-import com.gitlab.nuf.exeter.core.Exeter;
-import com.gitlab.nuf.exeter.events.PacketEvent;
-import com.gitlab.nuf.exeter.module.Module;
+import me.friendly.api.event.Listener;
+import me.friendly.exeter.core.Exeter;
+import me.friendly.exeter.events.PacketEvent;
+import me.friendly.exeter.module.Module;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 
 public final class AntiAim

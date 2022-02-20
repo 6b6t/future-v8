@@ -6,14 +6,8 @@
  *  com.google.gson.JsonElement
  *  com.google.gson.JsonObject
  */
-package com.gitlab.nuf.exeter.module;
+package me.friendly.exeter.module;
 
-import com.gitlab.nuf.api.interfaces.Labeled;
-import com.gitlab.nuf.exeter.core.Exeter;
-import com.gitlab.nuf.exeter.presets.Preset;
-import com.gitlab.nuf.exeter.properties.EnumProperty;
-import com.gitlab.nuf.exeter.properties.NumberProperty;
-import com.gitlab.nuf.exeter.properties.Property;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -25,6 +19,12 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import me.friendly.api.interfaces.Labeled;
+import me.friendly.exeter.core.Exeter;
+import me.friendly.exeter.presets.Preset;
+import me.friendly.exeter.properties.EnumProperty;
+import me.friendly.exeter.properties.NumberProperty;
+import me.friendly.exeter.properties.Property;
 import net.minecraft.client.Minecraft;
 
 public class Module
@@ -155,8 +155,8 @@ implements Labeled {
             try {
                 jsonFile.createNewFile();
             }
-            catch (IOException e2) {
-                e2.printStackTrace();
+            catch (IOException e) {
+                e.printStackTrace();
             }
         }
         File file = jsonFile;
@@ -174,15 +174,15 @@ implements Labeled {
         try {
             file.createNewFile();
         }
-        catch (IOException e3) {
-            e3.printStackTrace();
+        catch (IOException e) {
+            e.printStackTrace();
             return;
         }
         try (FileWriter writer = new FileWriter(file);){
             writer.write(new GsonBuilder().setPrettyPrinting().create().toJson((JsonElement)node));
         }
-        catch (IOException e4) {
-            e4.printStackTrace();
+        catch (IOException e) {
+            e.printStackTrace();
             file.delete();
         }
     }
